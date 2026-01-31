@@ -38,6 +38,8 @@ namespace Spore_ModAPI_Easy_Installer
         string ModConfigPath = string.Empty;
         string ModUnique = string.Empty;
         Version ModVersion = null;
+        List<string> ModDependencies = new List<string>();
+        List<Version> ModDependenciesVersions = new List<Version>();
         XmlDocument Document = new XmlDocument();
         List<ComponentInfo> Prerequisites = new List<ComponentInfo>();
         List<ComponentInfo> CompatFiles = new List<ComponentInfo>();
@@ -257,6 +259,78 @@ namespace Spore_ModAPI_Easy_Installer
                         }
                         else
                             ModVersion = null;
+
+                        if (Document.SelectSingleNode("/mod").Attributes["depends"] != null)
+                        {
+                            string dependsString = Document.SelectSingleNode("/mod").Attributes["depends"].Value;
+                            string dependsVersionString = null;
+                            if (Document.SelectSingleNode("/mod").Attributes["dependsVersions"] != null)
+                                dependsVersionString = Document.SelectSingleNode("/mod").Attributes["dependsVersions"].Value;
+                            string[] dependsUniqueNames = dependsString.Split('?');
+                            string[] dependsVersions = dependsVersionString == null ? null : dependsVersionString.Split('?');
+                            bool[] foundDepends = new bool[dependsUniqueNames.Length];
+                            // reset foundDepends
+                            for (int i = 0; i < foundDepends.Length; i++)
+                                foundDepends[i] = false;
+
+                            ModDependencies = dependsUniqueNames.ToList();
+                            if (dependsVersions != null)
+                            { // TODO: improve this logic...
+                                foreach (string dependsVersion in dependsVersions)
+                                {
+                                    if (Version.TryParse(dependsVersion, out Version parsedDependsVersion))
+                                    {
+                                        ModDependenciesVersions.Add(parsedDependsVersion);
+                                    }
+                                }
+                            }
+
+                            foreach (ModConfiguration mod in configs)
+                            {
+                                for (int i = 0; i < dependsUniqueNames.Length; i++)
+                                {
+                                    if (mod.Unique == dependsUniqueNames[i])
+                                    {
+                                        if (mod.Version != null && 
+                                            (dependsVersions != null) &&
+                                            (dependsVersions.Length > i) &&
+                                            (Version.TryParse(dependsVersions[i], out Version dependVersion) &&
+                                            mod.Version >= dependVersion))
+                                        { // name + version match
+                                            foundDepends[i] = true;
+                                            break;
+                                        }
+                                        else if (dependsVersions == null || dependsVersions.Length <= i)
+                                        { // name only match
+                                            foundDepends[i] = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            bool satisfiedDepends = true;
+                            List<string> missingDepends = new List<string>();
+                            for (int i = 0; i < foundDepends.Length; i++)
+                            {
+                                if (!foundDepends[i])
+                                {
+                                    satisfiedDepends = false;
+                                    string missingDependsText = dependsUniqueNames[i];
+                                    if (dependsVersions != null &&
+                                        dependsVersions.Length > i)
+                                    {
+                                        missingDependsText += " " + dependsVersions[i];
+                                    }
+                                    missingDepends.Add(missingDependsText);
+                                }
+                            }
+
+                            if (!satisfiedDepends)
+                            {
+                                throw new Exception($"This mod has dependencies that you don't have installed: {String.Join(", ", missingDepends)}");
+                            }
+                        }
 
                         NameTextBlock.Text = displayName;
                         DescriptionTextBlock.Text = ModDescription;
@@ -774,6 +848,8 @@ namespace Spore_ModAPI_Easy_Installer
                     {
                         DisplayName = ModDisplayName,
                         Version = ModVersion,
+                        Dependencies = ModDependencies.ToArray(),
+                        DependenciesVersions = ModDependenciesVersions.ToArray(),
                         ConfiguratorPath = Path.Combine(ModConfigPath, "ModInfo.xml")
                     };
 
@@ -799,6 +875,8 @@ namespace Spore_ModAPI_Easy_Installer
                     {
                         DisplayName = ModDisplayName,
                         Version = ModVersion,
+                        Dependencies = ModDependencies.ToArray(),
+                        DependenciesVersions = ModDependenciesVersions.ToArray(),
                     };
 
                     foreach (ComponentInfo c in Prerequisites)
