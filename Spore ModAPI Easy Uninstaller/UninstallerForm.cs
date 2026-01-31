@@ -46,11 +46,16 @@ namespace Spore_ModAPI_Easy_Uninstaller
             // add mods
             foreach (var mod in mods)
             {
+                string versionString = "";
+                if (mod.Version != null)
+                {
+                    versionString = mod.Version.ToString();
+                }
 
-                int index = this.dataGridView1.Rows.Add(new object[] { false, mod, mod.DisplayName });
+                int index = this.dataGridView1.Rows.Add(new object[] { false, mod, mod.DisplayName, versionString });
 
                 if (GetConfiguratorPath(index) != null)
-                    this.dataGridView1.Rows[index].Cells[3].ReadOnly = true;
+                    this.dataGridView1.Rows[index].Cells[4].ReadOnly = true;
             }
 
             // sort mods
@@ -67,7 +72,7 @@ namespace Spore_ModAPI_Easy_Uninstaller
 
         private void dataGridView_CellDoubleClick(Object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex != 0 && e.ColumnIndex == 3 && GetConfiguratorPath(e.RowIndex) != null)
+            if (e.RowIndex != 0 && e.ColumnIndex == 4 && GetConfiguratorPath(e.RowIndex) != null)
             {
                 // execute configurator and close uninstaller
                 ExecuteConfigurator(GetModConfiguration(e.RowIndex));
@@ -80,7 +85,7 @@ namespace Spore_ModAPI_Easy_Uninstaller
 
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex != 0 && e.ColumnIndex == 3 && GetConfiguratorPath(e.RowIndex) != null)
+            if (e.RowIndex != 0 && e.ColumnIndex == 4 && GetConfiguratorPath(e.RowIndex) != null)
             {
                 // execute configurator and close uninstaller
                 ExecuteConfigurator(GetModConfiguration(e.RowIndex));
@@ -153,7 +158,7 @@ namespace Spore_ModAPI_Easy_Uninstaller
 
         private void dataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.ColumnIndex == 3 && this.dataGridView1.SelectedRows.Count > 0)
+            if (e.ColumnIndex == 4 && this.dataGridView1.SelectedRows.Count > 0)
             {
                 if (e.RowIndex > 0)
                 {
