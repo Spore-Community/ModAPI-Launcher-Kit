@@ -52,6 +52,7 @@ namespace ModAPI.Common
 
         public string Name;
         public string Unique;
+        public Version Version;
         public string DisplayName;
         public string ConfiguratorPath;
         public List<InstalledFile> InstalledFiles = new List<InstalledFile>();
@@ -98,6 +99,13 @@ namespace ModAPI.Common
             element.Attributes.Append(uniqueAttribute);
             //}
 
+            if (Version != null)
+            {
+                var versionAttribute = document.CreateAttribute("version");
+                versionAttribute.Value = Version.ToString();
+                element.Attributes.Append(versionAttribute);
+            }
+
             if (this.ConfiguratorPath != null)
             {
                 attribute = document.CreateAttribute("configurator");
@@ -131,6 +139,17 @@ namespace ModAPI.Common
                 Unique = uniqueAttribute.Value;
             else
                 Unique = nameAttribute.Value;
+
+            var versionAttribute = node.Attributes.GetNamedItem("version");
+            if (versionAttribute != null &&
+                Version.TryParse(versionAttribute.Value, out Version parsedVersion))
+            {
+                Version = parsedVersion;
+            }
+            else
+            {
+                Version = null;
+            }
 
             var displayNameAttribute = node.Attributes.GetNamedItem("displayName");
             if (displayNameAttribute != null)
