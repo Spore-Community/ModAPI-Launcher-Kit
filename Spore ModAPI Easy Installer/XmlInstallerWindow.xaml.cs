@@ -37,6 +37,7 @@ namespace Spore_ModAPI_Easy_Installer
         string ModSettingsStoragePath = string.Empty;
         string ModConfigPath = string.Empty;
         string ModUnique = string.Empty;
+        Version ModVersion = null;
         XmlDocument Document = new XmlDocument();
         List<ComponentInfo> Prerequisites = new List<ComponentInfo>();
         List<ComponentInfo> CompatFiles = new List<ComponentInfo>();
@@ -246,6 +247,16 @@ namespace Spore_ModAPI_Easy_Installer
                             ModDescription = Document.SelectSingleNode("/mod").Attributes["description"].Value;
                         else
                             ModDescription = string.Empty;
+
+                        if (Document.SelectSingleNode("/mod").Attributes["version"] != null)
+                        {
+                            if (Version.TryParse(Document.SelectSingleNode("/mod").Attributes["version"].Value, out Version parsedVersion))
+                                ModVersion = parsedVersion;
+                            else
+                                throw new Exception("This mod has an invalid version. Please inform the mod's developer of this.");
+                        }
+                        else
+                            ModVersion = null;
 
                         NameTextBlock.Text = displayName;
                         DescriptionTextBlock.Text = ModDescription;
@@ -762,6 +773,7 @@ namespace Spore_ModAPI_Easy_Installer
                     ModConfiguration mod = new ModConfiguration(ModName, ModUnique)
                     {
                         DisplayName = ModDisplayName,
+                        Version = ModVersion,
                         ConfiguratorPath = Path.Combine(ModConfigPath, "ModInfo.xml")
                     };
 
@@ -785,7 +797,8 @@ namespace Spore_ModAPI_Easy_Installer
                 {
                     ModConfiguration mod = new ModConfiguration(ModName, ModUnique)
                     {
-                        DisplayName = ModDisplayName
+                        DisplayName = ModDisplayName,
+                        Version = ModVersion,
                     };
 
                     foreach (ComponentInfo c in Prerequisites)
