@@ -158,7 +158,8 @@ namespace Spore_ModAPI_Easy_Installer
                 if ((ModInfoVersion == new Version(1, 0, 0, 0)) ||
                     (ModInfoVersion == new Version(1, 0, 1, 0)) ||
                     (ModInfoVersion == new Version(1, 0, 1, 1)) ||
-                    (ModInfoVersion == new Version(1, 0, 1, 2)))
+                    (ModInfoVersion == new Version(1, 0, 1, 2)) ||
+                    (ModInfoVersion == new Version(1, 0, 1, 3)))
                 {
                     if (File.Exists(Path.Combine(ModConfigPath, "Branding.png")))
                     {
@@ -186,7 +187,8 @@ namespace Spore_ModAPI_Easy_Installer
                     }
                     else if ((ModInfoVersion == new Version(1, 0, 1, 0)) ||
                              (ModInfoVersion == new Version(1, 0, 1, 1)) ||
-                             (ModInfoVersion == new Version(1, 0, 1, 2)))
+                             (ModInfoVersion == new Version(1, 0, 1, 2)) ||
+                             (ModInfoVersion == new Version(1, 0, 1, 3)))
                     {
                         _dontUseLegacyPackagePlacement = true;
                         _installerMode = 1;
@@ -250,85 +252,98 @@ namespace Spore_ModAPI_Easy_Installer
                         else
                             ModDescription = string.Empty;
 
-                        if (Document.SelectSingleNode("/mod").Attributes["version"] != null)
+                        // installerSystemVersion 1.0.1.3 introduced the version, depends and dependsVersion attributes
+                        if (ModInfoVersion == new Version(1, 0, 1, 3))
                         {
-                            if (Version.TryParse(Document.SelectSingleNode("/mod").Attributes["version"].Value, out Version parsedVersion))
-                                ModVersion = parsedVersion;
+                            if (Document.SelectSingleNode("/mod").Attributes["version"] != null)
+                            {
+                                if (Version.TryParse(Document.SelectSingleNode("/mod").Attributes["version"].Value, out Version parsedVersion))
+                                    ModVersion = parsedVersion;
+                                else
+                                    throw new Exception("This mod has an invalid version. Please inform the mod's developer of this.");
+                            }
                             else
-                                throw new Exception("This mod has an invalid version. Please inform the mod's developer of this.");
-                        }
-                        else
-                            ModVersion = null;
+                                ModVersion = null;
 
-                        if (Document.SelectSingleNode("/mod").Attributes["depends"] != null)
-                        {
-                            string dependsString = Document.SelectSingleNode("/mod").Attributes["depends"].Value;
-                            string dependsVersionString = null;
-                            if (Document.SelectSingleNode("/mod").Attributes["dependsVersions"] != null)
-                                dependsVersionString = Document.SelectSingleNode("/mod").Attributes["dependsVersions"].Value;
-                            string[] dependsUniqueNames = dependsString.Split('?');
-                            string[] dependsVersions = dependsVersionString == null ? null : dependsVersionString.Split('?');
-                            bool[] foundDepends = new bool[dependsUniqueNames.Length];
-                            // reset foundDepends
-                            for (int i = 0; i < foundDepends.Length; i++)
-                                foundDepends[i] = false;
-
-                            ModDependencies = dependsUniqueNames.ToList();
-                            if (dependsVersions != null)
-                            { // TODO: improve this logic...
-                                foreach (string dependsVersion in dependsVersions)
-                                {
-                                    if (Version.TryParse(dependsVersion, out Version parsedDependsVersion))
-                                    {
-                                        ModDependenciesVersions.Add(parsedDependsVersion);
-                                    }
-                                }
-                            }
-
-                            foreach (ModConfiguration mod in configs)
+                            if (Document.SelectSingleNode("/mod").Attributes["depends"] != null)
                             {
-                                for (int i = 0; i < dependsUniqueNames.Length; i++)
+                                string dependsString = Document.SelectSingleNode("/mod").Attributes["depends"].Value;
+                                string dependsVersionString = null;
+                                if (Document.SelectSingleNode("/mod").Attributes["dependsVersions"] != null)
+                                    dependsVersionString = Document.SelectSingleNode("/mod").Attributes["dependsVersions"].Value;
+                                string[] dependsUniqueNames = dependsString.Split('?');
+                                string[] dependsVersions = dependsVersionString?.Split('?');
+                                bool[] foundDepends = new bool[dependsUniqueNames.Length];
+
+                                ModDependencies = dependsUniqueNames.ToList();
+                                if (dependsVersions != null)
                                 {
-                                    if (mod.Unique == dependsUniqueNames[i])
+                                    foreach (string dependsVersion in dependsVersions)
                                     {
-                                        if (mod.Version != null && 
-                                            (dependsVersions != null) &&
-                                            (dependsVersions.Length > i) &&
-                                            (Version.TryParse(dependsVersions[i], out Version dependVersion) &&
-                                            mod.Version >= dependVersion))
-                                        { // name + version match
-                                            foundDepends[i] = true;
-                                            break;
+                                        if (String.IsNullOrEmpty(dependsVersion))
+                                        { // 0.0.0.0 is interpreted as having no version attribute
+                                          // but we need to pad the list to match the amount of items
+                                          // that ModDependencies has
+                                            ModDependenciesVersions.Add(new Version(0, 0, 0, 0));
                                         }
-                                        else if (dependsVersions == null || dependsVersions.Length <= i)
-                                        { // name only match
-                                            foundDepends[i] = true;
-                                            break;
+                                        else
+                                        {
+                                            if (Version.TryParse(dependsVersion, out Version parsedDependsVersion))
+                                            {
+                                                ModDependenciesVersions.Add(parsedDependsVersion);
+                                            }
+                                            else
+                                            {
+                                                throw new Exception($"This mod has an invalid dependsVersions entry: \"{dependsVersion}\". Please inform the mod's developer of this.");
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            bool satisfiedDepends = true;
-                            List<string> missingDepends = new List<string>();
-                            for (int i = 0; i < foundDepends.Length; i++)
-                            {
-                                if (!foundDepends[i])
+                                foreach (ModConfiguration mod in configs)
                                 {
-                                    satisfiedDepends = false;
-                                    string missingDependsText = dependsUniqueNames[i];
-                                    if (dependsVersions != null &&
-                                        dependsVersions.Length > i)
+                                    for (int i = 0; i < dependsUniqueNames.Length; i++)
                                     {
-                                        missingDependsText += " " + dependsVersions[i];
+                                        if (mod.Unique == dependsUniqueNames[i])
+                                        {
+                                            if (mod.Version != null &&
+                                                (ModDependenciesVersions.Count() > i) &&
+                                                (mod.Version >= ModDependenciesVersions[i]))
+                                            { // name + version match
+                                                foundDepends[i] = true;
+                                                break;
+                                            }
+                                            else if (ModDependenciesVersions.Count() <= i ||
+                                                     ModDependenciesVersions[i] == new Version(0, 0, 0, 0))
+                                            { // name only match
+                                                foundDepends[i] = true;
+                                                break;
+                                            }
+                                        }
                                     }
-                                    missingDepends.Add(missingDependsText);
                                 }
-                            }
 
-                            if (!satisfiedDepends)
-                            {
-                                throw new Exception($"This mod has dependencies that you don't have installed: {String.Join(", ", missingDepends)}");
+                                bool satisfiedDepends = true;
+                                List<string> missingDepends = new List<string>();
+                                for (int i = 0; i < foundDepends.Length; i++)
+                                {
+                                    if (!foundDepends[i])
+                                    {
+                                        satisfiedDepends = false;
+                                        string missingDependsText = dependsUniqueNames[i];
+                                        if (dependsVersions != null &&
+                                            dependsVersions.Length > i)
+                                        {
+                                            missingDependsText += " " + dependsVersions[i];
+                                        }
+                                        missingDepends.Add(missingDependsText);
+                                    }
+                                }
+
+                                if (!satisfiedDepends)
+                                {
+                                    throw new Exception($"This mod has dependencies that you don't have installed: {String.Join(", ", missingDepends)}");
+                                }
                             }
                         }
 
