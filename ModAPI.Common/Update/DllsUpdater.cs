@@ -58,7 +58,7 @@ namespace ModAPI.Common.Update
         /// <returns></returns>
         public static bool HasDllsUpdate(out GithubRelease release)
         {
-            release = GetLatestGithubRelease("emd4600", "Spore-ModAPI");
+            release = GetLatestGithubRelease("Spore-Community", "Spore-ModAPI");
             var updateVersion = ParseGithubVersion(release.tag_name);
 
             return updateVersion > UpdateManager.CurrentDllsBuild;
