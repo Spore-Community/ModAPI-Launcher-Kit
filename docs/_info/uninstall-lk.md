@@ -1,5 +1,6 @@
 ---
 title: Uninstall Launcher Kit
+description: If you are uninstalling the Launcher Kit in an attempt to solve a problem, please read through the other support pages or ask for help first. You must uninstall all mods before uninstalling the Launcher Kit.
 ---
 ## Some notes before uninstalling
 If you are uninstalling the Launcher Kit in an attempt to solve a problem, please read through the other support pages or ask for help first. Most likely, your issue will not be resolved by simply reinstalling the Launcher Kit.

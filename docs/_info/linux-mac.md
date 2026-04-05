@@ -1,5 +1,6 @@
 ---
 title: Linux & Mac Support
+description: The Launcher Kit is not optimized for use on Linux or Mac, which both use a Windows compatibility layer to run the game. On these platforms, it is instead recommended to use SporeModLoader.
 ---
 The Launcher Kit is not optimized for use on Linux or Mac, which both use a Windows compatibility layer to run the game. On these platforms, it is instead recommended to use **SporeModLoader**.
 

@@ -1,5 +1,6 @@
 ---
 title: Data directory is missing or corrupt
+description: Steam users: Please launch Spore Galactic Adventures once from Steam before using the Launcher Kit. Afterwards, you should always use the ModAPI Launcher instead of launching from Steam.
 ---
 You may also see "Configuration Script Failed" along with this error. The two errors are related.
 

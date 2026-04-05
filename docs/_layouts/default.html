@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Spore ModAPI Launcher Kit - {{ page.title }}</title>
+    <title>Spore ModAPI Launcher Kit{% if page.url == "/" %} - {{ page.title }}{% endif %}</title>
 
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
     <link rel="stylesheet" href="/style/default.css">
@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="description" content="The Spore ModAPI Launcher Kit installs, manages, and loads mods for Spore. It is the recommended way to install all mods, and allows mods to use advanced features, such as introducing new game modes, cheats, configurable options, and more.">
-    <meta name="keywords" content="Spore, ModAPI, Launcher Kit, mods">
-    <meta property="og:title" content="Spore ModAPI Launcher Kit">
-    <meta property="og:description" content="The Spore ModAPI Launcher Kit installs, manages, and loads mods for Spore. It is the recommended way to install all mods, and allows mods to use advanced features, such as introducing new game modes, cheats, configurable options, and more.">
+    <meta name="keywords" content="Spore, ModAPI, Launcher Kit, mods, modding">
+    <meta property="og:title" content="Spore ModAPI Launcher Kit{% if page.url == '/' %} - {{ page.title }}{% endif %}">
+    <meta property="og:description" content="{{ page.description }}">
     <meta property="og:image" content="/style/images/launcher.png">
 </head>
 
@@ -45,7 +45,7 @@
 
     <footer>
         <p>The Launcher Kit is maintained by various contributors from the Spore community. Contact via <a target="_blank" rel="noopener noreferrer" href="{{ page.smc_discord_url }}">Discord</a> or <a href="mailto:launcherkit@sporecommunity.com">email</a>. Source code on <a target="_blank" rel="noopener noreferrer" href="{{ site.github.repository_url }}">GitHub</a>. Licensed under the <a href="{{ page.license_url }}">{{ page.license_name }}</a>.</p>
-        <p>Mods are maintained by their respective authors, and have not been checked for quality or safety. Use caution when installing unfamiliar mods.</p>
+        <p>Mods are maintained by their respective authors, and no guarantees are made regarding quality or safety. Use caution when installing unfamiliar mods.</p>
         <p><strong>Not associated with or endorsed by Electronic Arts or Maxis.</strong> The Launcher Kit, ModAPI, and all mods are unofficial and not supported by EA or Maxis.</p>
     </footer>
 

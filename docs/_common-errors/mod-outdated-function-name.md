@@ -1,5 +1,6 @@
 ---
 title: Entry Point Not Found
+description: This error means that a mod requires an update to work with the latest version of the ModAPI. Check that your mods are up-to-date.
 ---
 This error means that a mod requires an update to work with the latest version of the ModAPI.
 

@@ -1,5 +1,6 @@
 ---
 title: Defender/SmartScreen/Virus Detections
+description: When a new Launcher Kit version is released, for a short period of time, the new version may be blocked by Windows Defender, SmartScreen, or your web browser. This is a false positive due to how Microsoft's filters work. Please read the full page for more details on how we keep the Launcher Kit safe.
 ---
 When a new Launcher Kit version is released, for a short period of time, the new version may be blocked by Windows Defender, SmartScreen, or your web browser. This is a false positive due to how Microsoft's filters work.
 
@@ -54,7 +55,7 @@ All of these use HTTPS to ensure that your connection to the website has not bee
 **Do not download the Launcher Kit from any other website.** We do not maintain downloads on other websites, and cannot ensure that they have not been tampered with. For your safety, only download from the official locations.
 
 ### Safety when using mods
-Please note that while the Launcher Kit itself is safe, we do not check individual mods for quality or safety. Only install mods from trusted sources. Use caution when installing unfamiliar mods.
+Please note that while the Launcher Kit itself is safe, we cannot guarantee that individual mods have been checked for quality or safety. Only install mods from trusted sources. Use caution when installing unfamiliar mods.
 
 Do not run the Launcher as administrator, as this is a security risk because it removes certain safeguards, allowing mods to have full unrestricted access to your computer.
 

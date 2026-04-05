@@ -1,5 +1,6 @@
 ---
 title: Game Crashes
+description: If your game freezes or crashes (i.e. "SPORE Galactic Adventures has stopped responding"), it may be due to a bug in the game itself, or due to a mod. See the page on Improving Game Stability for general recommendations that may help fix some crashes. You can ask for help when troubleshooting other crashes.
 ---
 If your game freezes or crashes (i.e. "SPORE Galactic Adventures has stopped responding"), it may be due to a bug in the game itself, or due to a mod.
 
