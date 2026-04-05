@@ -1,5 +1,6 @@
 ---
 title: Outdated Mods
+description: Spore modding has been around for over 15 years, and many older mods have not been updated to be compatible with newer game versions. Please see the full page for details on outdated mods.
 ---
 Spore modding has been around for over 15 years, and many older mods have not been updated to be compatible with newer game versions.
 

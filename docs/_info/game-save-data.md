@@ -1,5 +1,6 @@
 ---
 title: Backup Spore Save Data
+description: Spore saves all save data, including your galaxy (with all saved games), personal creations, downloaded creations, settings, saved login info, and cached data in one folder.
 ---
 Spore saves all save data, including your galaxy (with all saved games), personal creations, downloaded creations, settings, saved login info, and cached data in one folder.
 

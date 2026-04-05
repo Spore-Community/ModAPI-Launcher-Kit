@@ -1,5 +1,6 @@
 ---
 title: Updating Launcher Kit
+description: The Launcher Kit will automatically check for updates every time you open the Launcher, Easy Installer, or Easy Uninstaller. If an update is available, you will be prompted to install it.
 ---
 The Launcher Kit will automatically check for updates every time you open the Launcher, Easy Installer, or Easy Uninstaller. If an update is available, you will be prompted to install it.
 

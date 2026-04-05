@@ -1,5 +1,6 @@
 ---
 title: Galaxy Reset
+description: Because all campaign games take place in a single galaxy, mods that alter certain elements may require resetting the entire galaxy, for the mod to take effect. This does mean you will lose *all* saved games. The Easy Installer will warn you when installing a mod that requires a galaxy reset. It does *not* reset the galaxy automatically, to ensure you can create your own backup copy, if needed.
 ---
 Because all campaign games take place in a single galaxy, mods that alter certain elements may require resetting the entire galaxy, for the mod to take effect. This does mean you will lose *all* saved games.
 

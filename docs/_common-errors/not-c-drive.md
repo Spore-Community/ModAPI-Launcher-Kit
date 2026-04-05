@@ -1,5 +1,6 @@
 ---
 title: The system cannot find the file specified
+description: This error seems to occur when Spore is installed to a drive other than the C:\ drive. Unfortunately, we do not have any fix for this error, aside from reinstalling the game onto the C:\ drive.
 ---
 This error seems to occur when Spore is installed to a drive other than the C:\ drive.
 

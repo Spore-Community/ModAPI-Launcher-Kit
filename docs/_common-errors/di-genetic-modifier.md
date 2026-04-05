@@ -1,5 +1,6 @@
 ---
 title: Overlapping outfitters in Planner
+description: In the Tribe, City, or Colony Planner, the outfitter tab may show two thumbnails that are overlapping, preventing access to the outfitter. This is a bug in Dark Injection.
 ---
 In the Tribe, City, or Colony Planner, the outfitter tab may show two thumbnails that are overlapping, preventing access to the outfitter. This is a bug in Dark Injection.
 

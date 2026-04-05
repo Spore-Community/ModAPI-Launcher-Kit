@@ -16,7 +16,9 @@ defaults:
       crashfix_mod_url: "https://mods.sporecommunity.com/?search=SporeCrashFix"
       4gb_patch_url: "https://ntcore.com/?page_id=371"
       modapi_url: "https://modapi-docs.sporecommunity.com"
+      modapi_github_url: "https://github.com/Spore-Community/Spore-ModAPI"
       smfx_url: "https://smfx.sporecommunity.com"
+      smfx_github_url: "https://github.com/Spore-Community/SporeModder-FX"
       sporemodloader_url: "https://github.com/Rosalie241/SporeModLoader"
       gog_url: "https://www.gog.com/game/spore_collection"
   # Use "page.html" layout for markdown files

@@ -1,5 +1,6 @@
 ---
 title: Update Check Failed
+description: Download the latest version of the Launcher Kit from the website. Follow the instructions to update your existing Launcher Kit.
 ---
 This error occurs on Launcher Kit versions prior to 1.5.0.0. There are two ways to fix this error, you can perform either one.
 

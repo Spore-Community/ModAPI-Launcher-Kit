@@ -1,5 +1,6 @@
 ---
 title: Improving Game Stability
+description: Spore has a number of bugs and crashes that have never officially been fixed. Some of these can be resolved using the SporeCrashFix mod and the 4GB patch tool.
 ---
 Spore has a number of bugs and crashes that have never officially been fixed. Some of these can be resolved using external tools and mods.
 
