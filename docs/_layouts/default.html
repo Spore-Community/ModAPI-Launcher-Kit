@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Spore ModAPI Launcher Kit{% if page.url == "/" %} - {{ page.title }}{% endif %}</title>
+    <title>Spore ModAPI Launcher Kit{% if page.url != "/" %} - {{ page.title }}{% endif %}</title>
 
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
     <link rel="stylesheet" href="/style/default.css">
@@ -11,7 +11,7 @@
 
     <meta name="description" content="The Spore ModAPI Launcher Kit installs, manages, and loads mods for Spore. It is the recommended way to install all mods, and allows mods to use advanced features, such as introducing new game modes, cheats, configurable options, and more.">
     <meta name="keywords" content="Spore, ModAPI, Launcher Kit, mods, modding">
-    <meta property="og:title" content="Spore ModAPI Launcher Kit{% if page.url == '/' %} - {{ page.title }}{% endif %}">
+    <meta property="og:title" content="Spore ModAPI Launcher Kit{% if page.url != '/' %} - {{ page.title }}{% endif %}">
     <meta property="og:description" content="{{ page.description }}">
     <meta property="og:image" content="/style/images/launcher.png">
 </head>

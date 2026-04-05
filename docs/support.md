@@ -22,4 +22,4 @@ If you have tried all of the above and still need help, please prepare the follo
 
 Press Alt+PrtScr to copy a screenshot, then you can paste it directly into Discord or GitHub.
 
-Submit the above information in the #mod-support channel of the [Spore Modding Community Discord]({{ page.smc_discord_url }}) (recommended), or, create an issue on GitHub and submit it there. We do not provide support via email or DMs.
+Submit the above information in the #mod-support channel of the [Spore Modding Community Discord]({{ page.smc_discord_url }}) (recommended), or, create an issue on [GitHub](https://github.com/Spore-Community/ModAPI-Launcher-Kit/issues/new/choose) and submit it there. We do not provide support via email or DMs.
