@@ -39,6 +39,7 @@
             this.MainColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ModNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModDisplayNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ModVersions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModConfiguration = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -98,6 +99,7 @@
             this.MainColumn,
             this.ModNames,
             this.ModDisplayNames,
+            this.ModVersions,
             this.ModConfiguration});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -150,6 +152,12 @@
             this.ModDisplayNames.Name = "ModDisplayNames";
             this.ModDisplayNames.ReadOnly = true;
             // 
+            // ModVersions
+            // 
+            this.ModVersions.HeaderText = "Mod Versions";
+            this.ModVersions.Name = "ModVersions";
+            this.ModVersions.ReadOnly = true;
+            // 
             // ModConfiguration
             // 
             this.ModConfiguration.HeaderText = "Mod Configuration";
@@ -186,6 +194,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn MainColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ModNames;
         private System.Windows.Forms.DataGridViewTextBoxColumn ModDisplayNames;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ModVersions;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ModConfiguration;
     }
 }

@@ -75,6 +75,31 @@ namespace Spore_ModAPI_Easy_Uninstaller
 
             try
             {
+                // ensure we don't remove a mod which
+                // is a dependency of another mod
+                List<string> modDependencies = new List<string>();
+                List<string> reliantMods = new List<string>();
+                foreach (var mod in Mods.ModConfigurations)
+                {
+                    foreach (var uninstallMod in mods)
+                    {
+                        if (mod.Dependencies != null &&
+                            mod.Dependencies.Contains(uninstallMod.Key.Unique) &&
+                            !mods.Select(x => x.Key.Unique).Contains(mod.Unique))
+                        {
+                            modDependencies.Add(uninstallMod.Key.DisplayName);
+                            if (!reliantMods.Contains(mod.DisplayName))
+                                reliantMods.Add(mod.DisplayName);
+                        }
+                    }
+                }
+
+                if (modDependencies.Count() > 0)
+                {
+                    MessageBox.Show($"Cannot uninstall {String.Join(", ", modDependencies.ToArray())} because {String.Join(", ", reliantMods.ToArray())} relies on them being installed!", CommonStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 foreach (var mod in mods)
                 {
                     ResultType result = ResultType.Success;

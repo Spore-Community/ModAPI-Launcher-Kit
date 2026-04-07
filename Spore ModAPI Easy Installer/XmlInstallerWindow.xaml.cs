@@ -37,6 +37,9 @@ namespace Spore_ModAPI_Easy_Installer
         string ModSettingsStoragePath = string.Empty;
         string ModConfigPath = string.Empty;
         string ModUnique = string.Empty;
+        Version ModVersion = null;
+        List<string> ModDependencies = new List<string>();
+        List<Version> ModDependenciesVersions = new List<Version>();
         XmlDocument Document = new XmlDocument();
         List<ComponentInfo> Prerequisites = new List<ComponentInfo>();
         List<ComponentInfo> CompatFiles = new List<ComponentInfo>();
@@ -154,7 +157,8 @@ namespace Spore_ModAPI_Easy_Installer
                 if ((ModInfoVersion == new Version(1, 0, 0, 0)) || 
                     (ModInfoVersion == new Version(1, 0, 1, 0)) || 
                     (ModInfoVersion == new Version(1, 0, 1, 1)) ||
-                    (ModInfoVersion == new Version(1, 0, 1, 2)))
+                    (ModInfoVersion == new Version(1, 0, 1, 2)) ||
+                    (ModInfoVersion == new Version(1, 0, 1, 3)))
                 {
                     if (File.Exists(Path.Combine(ModConfigPath, "Branding.png")))
                     {
@@ -182,7 +186,8 @@ namespace Spore_ModAPI_Easy_Installer
                     }
                     else if ((ModInfoVersion == new Version(1, 0, 1, 0)) || 
                              (ModInfoVersion == new Version(1, 0, 1, 1)) ||
-                             (ModInfoVersion == new Version(1, 0, 1, 2)))
+                             (ModInfoVersion == new Version(1, 0, 1, 2)) ||
+                             (ModInfoVersion == new Version(1, 0, 1, 3)))
                     {
                         _dontUseLegacyPackagePlacement = true;
                         _installerMode = 1;
@@ -242,6 +247,101 @@ namespace Spore_ModAPI_Easy_Installer
                             ModDescription = Document.SelectSingleNode("/mod").Attributes["description"].Value;
                         else
                             ModDescription = string.Empty;
+
+                        // installerSystemVersion 1.0.1.3 introduced the version, depends and dependsVersion attributes
+                        if (ModInfoVersion == new Version(1, 0, 1, 3))
+                        {
+                            if (Document.SelectSingleNode("/mod").Attributes["version"] != null)
+                            {
+                                if (Version.TryParse(Document.SelectSingleNode("/mod").Attributes["version"].Value, out Version parsedVersion))
+                                    ModVersion = parsedVersion;
+                                else
+                                    throw new Exception("This mod has an invalid version. Please inform the mod's developer of this.");
+                            }
+                            else
+                                ModVersion = null;
+
+                            if (Document.SelectSingleNode("/mod").Attributes["depends"] != null)
+                            {
+                                string dependsString = Document.SelectSingleNode("/mod").Attributes["depends"].Value;
+                                string dependsVersionString = null;
+                                if (Document.SelectSingleNode("/mod").Attributes["dependsVersions"] != null)
+                                    dependsVersionString = Document.SelectSingleNode("/mod").Attributes["dependsVersions"].Value;
+                                string[] dependsUniqueNames = dependsString.Split('?');
+                                string[] dependsVersions = dependsVersionString?.Split('?');
+                                bool[] foundDepends = new bool[dependsUniqueNames.Length];
+
+                                ModDependencies = dependsUniqueNames.ToList();
+                                if (dependsVersions != null)
+                                {
+                                    foreach (string dependsVersion in dependsVersions)
+                                    {
+                                        if (String.IsNullOrEmpty(dependsVersion))
+                                        { // 0.0.0.0 is interpreted as having no version attribute
+                                          // but we need to pad the list to match the amount of items
+                                          // that ModDependencies has
+                                            ModDependenciesVersions.Add(new Version(0, 0, 0, 0));
+                                        }
+                                        else
+                                        {
+                                            if (Version.TryParse(dependsVersion, out Version parsedDependsVersion))
+                                            {
+                                                ModDependenciesVersions.Add(parsedDependsVersion);
+                                            }
+                                            else
+                                            {
+                                                throw new Exception($"This mod has an invalid dependsVersions entry: \"{dependsVersion}\". Please inform the mod's developer of this.");
+                                            }
+                                        }
+                                    }
+                                }
+
+                                foreach (ModConfiguration mod in configs)
+                                {
+                                    for (int i = 0; i < dependsUniqueNames.Length; i++)
+                                    {
+                                        if (mod.Unique == dependsUniqueNames[i])
+                                        {
+                                            if (mod.Version != null &&
+                                                (ModDependenciesVersions.Count() > i) &&
+                                                (mod.Version >= ModDependenciesVersions[i]))
+                                            { // name + version match
+                                                foundDepends[i] = true;
+                                                break;
+                                            }
+                                            else if (ModDependenciesVersions.Count() <= i ||
+                                                     ModDependenciesVersions[i] == new Version(0, 0, 0, 0))
+                                            { // name only match
+                                                foundDepends[i] = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                bool satisfiedDepends = true;
+                                List<string> missingDepends = new List<string>();
+                                for (int i = 0; i < foundDepends.Length; i++)
+                                {
+                                    if (!foundDepends[i])
+                                    {
+                                        satisfiedDepends = false;
+                                        string missingDependsText = dependsUniqueNames[i];
+                                        if (dependsVersions != null &&
+                                            dependsVersions.Length > i)
+                                        {
+                                            missingDependsText += " " + dependsVersions[i];
+                                        }
+                                        missingDepends.Add(missingDependsText);
+                                    }
+                                }
+
+                                if (!satisfiedDepends)
+                                {
+                                    throw new Exception($"This mod has dependencies that you don't have installed: {String.Join(", ", missingDepends)}");
+                                }
+                            }
+                        }
 
                         NameTextBlock.Text = displayName;
                         DescriptionTextBlock.Text = ModDescription;
@@ -757,6 +857,9 @@ namespace Spore_ModAPI_Easy_Installer
                     ModConfiguration mod = new ModConfiguration(ModName, ModUnique)
                     {
                         DisplayName = ModDisplayName,
+                        Version = ModVersion,
+                        Dependencies = ModDependencies.ToArray(),
+                        DependenciesVersions = ModDependenciesVersions.ToArray(),
                         ConfiguratorPath = Path.Combine(ModConfigPath, "ModInfo.xml")
                     };
 
@@ -780,7 +883,10 @@ namespace Spore_ModAPI_Easy_Installer
                 {
                     ModConfiguration mod = new ModConfiguration(ModName, ModUnique)
                     {
-                        DisplayName = ModDisplayName
+                        DisplayName = ModDisplayName,
+                        Version = ModVersion,
+                        Dependencies = ModDependencies.ToArray(),
+                        DependenciesVersions = ModDependenciesVersions.ToArray(),
                     };
 
                     foreach (ComponentInfo c in Prerequisites)
