@@ -9,11 +9,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Interop;
 using System.Xml;
 
 namespace Spore_ModAPI_Easy_Installer
@@ -71,7 +68,7 @@ namespace Spore_ModAPI_Easy_Installer
                 ModList.Load();
 
                 // ensure we find Spore & GA as early as possible
-                if (PathDialogs.ProcessSpore() == null || 
+                if (PathDialogs.ProcessSpore() == null ||
                     PathDialogs.ProcessGalacticAdventures() == null)
                 {
                     return;
@@ -104,7 +101,7 @@ namespace Spore_ModAPI_Easy_Installer
                         FileType fileType = GetFileType(Path.GetFileName(inputPath));
                         string modName = Path.GetFileNameWithoutExtension(inputPath);
                         ResultType result = ResultType.UnsupportedFile;
-                        
+
 
                         try
                         {
@@ -382,7 +379,7 @@ namespace Spore_ModAPI_Easy_Installer
                         }
                     }
 
-                    eventHandler?.Invoke(null, (int)((entriesExtracted / (float) numEntries) * 100.0f));
+                    eventHandler?.Invoke(null, (int)((entriesExtracted / (float)numEntries) * 100.0f));
                     entriesExtracted++;
                 }
             }
@@ -390,24 +387,20 @@ namespace Spore_ModAPI_Easy_Installer
             return ResultType.Success;
         }
 
-        private static bool CheckModCoreDllsVersion(ZipArchiveEntry xmlEntry)
+        private static Version GetModCoreDllsVersion(ZipArchiveEntry xmlEntry)
         {
-            try
+            using (var stream = xmlEntry.Open())
             {
-                using (var stream = xmlEntry.Open())
-                {
-                    var document = new XmlDocument();
-                    document.Load(stream);
+                var document = new XmlDocument();
+                document.Load(stream);
 
-                    if (!UpdateManager.HasValidDllsVersion(document))
-                    {
-                        return false;
-                    }
+                var modNode = document.SelectSingleNode("/mod");
+                if (modNode != null && modNode.Attributes["dllsBuild"] != null)
+                {
+                    return Version.Parse(modNode.Attributes["dllsBuild"].Value);
                 }
             }
-            catch {
-            }
-            return true;
+            return null;
         }
 
         static ResultType TryExecuteInstaller(string inputFile, string modName)
@@ -420,12 +413,24 @@ namespace Spore_ModAPI_Easy_Installer
 
                 if (xmlEntry != null)
                 {
-                    if (!CheckModCoreDllsVersion(xmlEntry))
+                    Version modCoreDllsVersion = null;
+                    try
                     {
-                        MessageBox.Show($"\"{modName}\"{Strings.UnsupportedDllVersion}", 
-                            Strings.UnsupportedDllVersionTitle);
+                        modCoreDllsVersion = GetModCoreDllsVersion(xmlEntry);
+                    }
+                    // If the version cannot be read due to an exception, show an error and don't install the mod
+                    catch
+                    {
+                        MessageBox.Show($"\"{modName}\"{Strings.InvalidDllVersion}", Strings.InvalidDllVersionTitle);
                         return ResultType.ModNotInstalled;
                     }
+                    // If the version can be read but is outdated, show an error and don't install the mod
+                    if (modCoreDllsVersion != null && modCoreDllsVersion > UpdateManager.CurrentDllsBuild)
+                    {
+                        MessageBox.Show($"\"{modName}\"{Strings.OutdatedDllVersion.Replace("$REQUIREDVERSION$", modCoreDllsVersion.ToString()).Replace("$CURRENTVERSION$", UpdateManager.CurrentDllsBuild.ToString())}", Strings.OutdatedDllVersionTitle);
+                        return ResultType.ModNotInstalled;
+                    }
+                    // If the version is not specified, continue installing (the value is optional because not all mods use the ModAPI SDK)
 
                     string modPath = Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString(), "ModConfigs", modName);
                     if (Directory.Exists(modPath))
@@ -563,7 +568,7 @@ namespace Spore_ModAPI_Easy_Installer
                 // the Installer existed but there was a problem
                 return result;
             }
-            
+
         }
 
         static void RemoveModFiles(ModConfiguration mod)

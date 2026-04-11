@@ -7,14 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Xml;
 using ModAPI.Common.Dialog;
 
 namespace ModAPI.Common.Update
 {
     public static class UpdateManager
     {
-        public static bool Development = false;
         public static List<string> LauncherKitUpdateUrls = new List<string>
         {
             // Cloudflare R2 + Cache
@@ -54,25 +52,6 @@ namespace ModAPI.Common.Update
                 else
                     return new Version(999, 999, 999, 999);
             }
-        }
-
-        public static bool HasValidDllsVersion(XmlDocument document)
-        {
-            var modNode = document.SelectSingleNode("/mod");
-
-            if (modNode != null)
-            {
-                Version requiredDllsVersion = null;
-                if (modNode.Attributes["dllsBuild"] != null)
-                    Version.TryParse(modNode.Attributes["dllsBuild"].Value, out requiredDllsVersion);
-
-                if (requiredDllsVersion != null &&
-                    requiredDllsVersion > CurrentDllsBuild)
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         public static void CheckForUpdates()

@@ -19,7 +19,7 @@ namespace Spore_ModAPI_Easy_Installer {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -133,6 +133,24 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help..
+        /// </summary>
+        internal static string InvalidDllVersion {
+            get {
+                return ResourceManager.GetString("InvalidDllVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: mod cannot be installed.
+        /// </summary>
+        internal static string InvalidDllVersionTitle {
+            get {
+                return ResourceManager.GetString("InvalidDllVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The mod &quot;.
         /// </summary>
         internal static string ModInstalled1 {
@@ -187,21 +205,23 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  cannot be installed, because it requires a greater version of the ModAPI Core DLLs.
-        ///Please, restart the launcher and allow it to update..
+        ///   Looks up a localized string similar to  cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
+        ///
+        ///Required ModAPI DLLs version: $REQUIREDVERSION$
+        ///Current ModAPI DLLs version: $CURRENTVERSION$.
         /// </summary>
-        internal static string UnsupportedDllVersion {
+        internal static string OutdatedDllVersion {
             get {
-                return ResourceManager.GetString("UnsupportedDllVersion", resourceCulture);
+                return ResourceManager.GetString("OutdatedDllVersion", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Error: mod cannot be installed.
         /// </summary>
-        internal static string UnsupportedDllVersionTitle {
+        internal static string OutdatedDllVersionTitle {
             get {
-                return ResourceManager.GetString("UnsupportedDllVersionTitle", resourceCulture);
+                return ResourceManager.GetString("OutdatedDllVersionTitle", resourceCulture);
             }
         }
     }
