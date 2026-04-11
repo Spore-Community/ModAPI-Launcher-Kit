@@ -156,14 +156,22 @@
   <data name="ModNotInstalled2" xml:space="preserve">
     <value>" could not be installed.</value>
   </data>
-  <data name="UnsupportedDllVersion" xml:space="preserve">
-    <value> cannot be installed, because it requires a greater version of the ModAPI Core DLLs.
-Please, restart the launcher and allow it to update.</value>
+  <data name="OutdatedDllVersionTitle" xml:space="preserve">
+    <value>Error: mod cannot be installed</value>
   </data>
-  <data name="UnsupportedDllVersionTitle" xml:space="preserve">
+  <data name="InvalidDllVersionTitle" xml:space="preserve">
     <value>Error: mod cannot be installed</value>
   </data>
   <data name="InstallationCompleted" xml:space="preserve">
     <value>Installation completed</value>
+  </data>
+  <data name="OutdatedDllVersion" xml:space="preserve">
+    <value> cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
+
+Required ModAPI DLLs version: $REQUIREDVERSION$
+Current ModAPI DLLs version: $CURRENTVERSION$</value>
+  </data>
+  <data name="InvalidDllVersion" xml:space="preserve">
+    <value> cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help.</value>
   </data>
 </root>
