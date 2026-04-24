@@ -50,11 +50,9 @@ namespace SporeModAPI_Launcher
             {
                 UpdateManager.CheckForUpdates();
                 Application.EnableVisualStyles();
-                LauncherSettings.Load();
 
                 // ensure we find Spore & GA as early as possible
-                if (PathDialogs.ProcessSpore() == null ||
-                    PathDialogs.ProcessGalacticAdventures() == null)
+                if (!SporePath.IsGameInstalled(true))
                 {
                     return;
                 }
@@ -78,7 +76,7 @@ namespace SporeModAPI_Launcher
                 // Before, we used Steam to launch the game and tried to find the new process and inject it.
                 // However, when the injection happens the game already executed a bit, so mods fail.
                 // Instead, we create a steam_appid.txt that allows us to execute SporeApp.exe directly                
-                SporebinPath = PathDialogs.ProcessGalacticAdventures();
+                SporebinPath = SporePath.GetSporebinEP1Path();
 
                 // use the default path for now (we might have to use a different one for Origin)
                 this.ExecutablePath = Path.Combine(this.SporebinPath, "SporeApp.exe");
@@ -126,7 +124,7 @@ namespace SporeModAPI_Launcher
                     }
                     else
                     {
-                        throw new Exception(CommonStrings.GalacticAdventuresNotFound);
+                        throw new Exception(CommonStrings.GameNotFound);
                     }
                 }
                 
