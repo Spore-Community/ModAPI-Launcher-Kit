@@ -118,13 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DllsUpdateAvailable" xml:space="preserve">
-    <value>An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Do you want to download it?</value>
+    <value>An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Would you like to install it now?
+
+Current Launcher Kit version: $CURRENTLK$
+Current ModAPI DLLs version: $CURRENTDLLS$
+New ModAPI DLLs version: $NEWDLLS$</value>
   </data>
   <data name="DllsUpdateAvailableTitle" xml:space="preserve">
     <value>ModAPI DLLs Update Available</value>
   </data>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
+  <data name="GameAlreadyRunning" xml:space="preserve">
+    <value>Please close Spore before using the Launcher Kit again.
+
+If you have just closed Spore, wait a moment for the game to fully exit. If you continue to get this error, please restart your computer.</value>
+  </data>
+  <data name="GameAlreadyRunningTitle" xml:space="preserve">
+    <value>Game already running</value>
   </data>
   <data name="GameNotFound" xml:space="preserve">
     <value>Spore or Spore Galactic Adventures was not found.
@@ -139,6 +148,15 @@ Please see https://launcherkit.sporecommunity.com/support for further help.</val
   <data name="InvalidPath" xml:space="preserve">
     <value>The path specified does not exist or is invalid.</value>
   </data>
+  <data name="LKUpdateAvailable" xml:space="preserve">
+    <value>An update to the Spore ModAPI Launcher Kit is now available. Would you like to install it now?
+
+Current Launcher Kit version: $CURRENTLK$
+New Launcher Kit version: $NEWLKS$</value>
+  </data>
+  <data name="LKUpdateAvailableTitle" xml:space="preserve">
+    <value>Launcher Kit Update Available</value>
+  </data>
   <data name="SteamDownloadedButNotLaunched" xml:space="preserve">
     <value>Please launch Spore Galactic Adventures once from Steam. This will complete the installation of the game, and allow the Launcher Kit to work.
 
@@ -149,11 +167,11 @@ If you continue to get this message, or the game is not installed from Steam, th
   <data name="SteamDownloadedButNotLaunchedTitle" xml:space="preserve">
     <value>Steam installation not completed</value>
   </data>
-  <data name="UnauthorizedAccess" xml:space="preserve">
-    <value>Unauthorized access. Try executing the launcher with Administrator Privileges (Right-click &gt; "Run as Administrator").</value>
+  <data name="UpdateCheckFailed" xml:space="preserve">
+    <value>The Launcher Kit could not connect to the update service. Try again in a few minutes, or check https://launcherkit.sporecommunity.com/support for help.</value>
   </data>
-  <data name="UnauthorizedAccessTitle" xml:space="preserve">
-    <value>Error: Unauthorized access</value>
+  <data name="UpdateCheckFailedTitle" xml:space="preserve">
+    <value>Launcher Kit Update</value>
   </data>
   <data name="UpdatingDllsDialog" xml:space="preserve">
     <value>ModAPI DLLs are updating to version </value>

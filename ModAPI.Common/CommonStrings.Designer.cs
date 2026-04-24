@@ -61,7 +61,11 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Do you want to download it?.
+        ///   Looks up a localized string similar to An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Would you like to install it now?
+        ///
+        ///Current Launcher Kit version: $CURRENTLK$
+        ///Current ModAPI DLLs version: $CURRENTDLLS$
+        ///New ModAPI DLLs version: $NEWDLLS$.
         /// </summary>
         public static string DllsUpdateAvailable {
             get {
@@ -79,11 +83,22 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
+        ///   Looks up a localized string similar to Please close Spore before using the Launcher Kit again.
+        ///
+        ///If you have just closed Spore, wait a moment for the game to fully exit. If you continue to get this error, please restart your computer..
         /// </summary>
-        public static string Error {
+        public static string GameAlreadyRunning {
             get {
-                return ResourceManager.GetString("Error", resourceCulture);
+                return ResourceManager.GetString("GameAlreadyRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game already running.
+        /// </summary>
+        public static string GameAlreadyRunningTitle {
+            get {
+                return ResourceManager.GetString("GameAlreadyRunningTitle", resourceCulture);
             }
         }
         
@@ -119,6 +134,27 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An update to the Spore ModAPI Launcher Kit is now available. Would you like to install it now?
+        ///
+        ///Current Launcher Kit version: $CURRENTLK$
+        ///New Launcher Kit version: $NEWLKS$.
+        /// </summary>
+        public static string LKUpdateAvailable {
+            get {
+                return ResourceManager.GetString("LKUpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launcher Kit Update Available.
+        /// </summary>
+        public static string LKUpdateAvailableTitle {
+            get {
+                return ResourceManager.GetString("LKUpdateAvailableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please launch Spore Galactic Adventures once from Steam. This will complete the installation of the game, and allow the Launcher Kit to work.
         ///
         ///Afterwards, always use the ModAPI Launcher to play the game.
@@ -141,20 +177,20 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unauthorized access. Try executing the launcher with Administrator Privileges (Right-click &gt; &quot;Run as Administrator&quot;)..
+        ///   Looks up a localized string similar to The Launcher Kit could not connect to the update service. Try again in a few minutes, or check https://launcherkit.sporecommunity.com/support for help..
         /// </summary>
-        public static string UnauthorizedAccess {
+        public static string UpdateCheckFailed {
             get {
-                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
+                return ResourceManager.GetString("UpdateCheckFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error: Unauthorized access.
+        ///   Looks up a localized string similar to Launcher Kit Update.
         /// </summary>
-        public static string UnauthorizedAccessTitle {
+        public static string UpdateCheckFailedTitle {
             get {
-                return ResourceManager.GetString("UnauthorizedAccessTitle", resourceCulture);
+                return ResourceManager.GetString("UpdateCheckFailedTitle", resourceCulture);
             }
         }
         

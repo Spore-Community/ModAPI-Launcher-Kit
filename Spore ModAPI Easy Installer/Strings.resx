@@ -121,7 +121,7 @@
     <value>Copying file</value>
   </data>
   <data name="ErrorUnsupportedFile" xml:space="preserve">
-    <value>The file given is not supported. Only .sporemod, .package and .exe files are supported.</value>
+    <value>This is not a valid mod file. Only .sporemod and .package files are supported.</value>
   </data>
   <data name="ExtractingFile" xml:space="preserve">
     <value>Extracting file</value>
@@ -132,32 +132,23 @@
   <data name="FileChooserTitle" xml:space="preserve">
     <value>Choose the mod to be installed</value>
   </data>
-  <data name="CancelledInstallation" xml:space="preserve">
-    <value>" cancelled installation</value>
+  <data name="ModCancelled" xml:space="preserve">
+    <value>Installation of the mod "$MODNAME$" was cancelled.</value>
   </data>
   <data name="InstallingModTitle" xml:space="preserve">
     <value>Installing mod...</value>
   </data>
-  <data name="ModInstalled1" xml:space="preserve">
-    <value>The mod "</value>
+  <data name="ModInstalled" xml:space="preserve">
+    <value>The mod "$MODNAME$" has been installed.</value>
   </data>
-  <data name="ModInstalled2" xml:space="preserve">
-    <value>" has been installed successfully.</value>
+  <data name="InstallingMod" xml:space="preserve">
+    <value>The mod "$MODNAME$" is being installed, please wait...</value>
   </data>
-  <data name="ModIsInstalling1" xml:space="preserve">
-    <value>The mod "</value>
-  </data>
-  <data name="ModIsInstalling2" xml:space="preserve">
-    <value>" is being installed. Please, wait until it finishes.</value>
-  </data>
-  <data name="ModNotInstalled1" xml:space="preserve">
-    <value>The mod "</value>
-  </data>
-  <data name="ModNotInstalled2" xml:space="preserve">
-    <value>" could not be installed.</value>
+  <data name="ModNotInstalled" xml:space="preserve">
+    <value>Something went wrong when installing the mod "$MODNAME$". This mod was not installed.</value>
   </data>
   <data name="OutdatedDllVersionTitle" xml:space="preserve">
-    <value>Error: mod cannot be installed</value>
+    <value>Outdated ModAPI DLLs version</value>
   </data>
   <data name="InvalidDllVersionTitle" xml:space="preserve">
     <value>Error: mod cannot be installed</value>
@@ -168,10 +159,12 @@
   <data name="OutdatedDllVersion" xml:space="preserve">
     <value> cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
 
-Required ModAPI DLLs version: $REQUIREDVERSION$
-Current ModAPI DLLs version: $CURRENTVERSION$</value>
+Required ModAPI DLLs version: $REQUIREDVERSION$ or higher</value>
   </data>
   <data name="InvalidDllVersion" xml:space="preserve">
     <value> cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help.</value>
+  </data>
+  <data name="UnauthorizedAccess" xml:space="preserve">
+    <value>The Easy Installer does not currently have permission to install or change mods. You may need to right-click the Easy Installer and "Run as Administrator".</value>
   </data>
 </root>

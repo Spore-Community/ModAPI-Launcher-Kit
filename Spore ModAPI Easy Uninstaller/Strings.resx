@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Are you sure you want to uninstall the selected mods and all their components?</value>
+    <value>Are you sure you want to uninstall the selected mods and all of their components?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -133,13 +133,16 @@
     <value>Confirmation needed</value>
   </data>
   <data name="CouldNotUninstall" xml:space="preserve">
-    <value>Error, could not uninstall mod</value>
+    <value>Could not uninstall mod</value>
   </data>
   <data name="InstalledMods" xml:space="preserve">
     <value>Installed Mods</value>
   </data>
   <data name="ModsWereUninstalled" xml:space="preserve">
-    <value>The following mods were uninstalled successfully:</value>
+    <value>The following mods were uninstalled:</value>
+  </data>
+  <data name="UnauthorizedAccess" xml:space="preserve">
+    <value>The Easy Uninstaller does not currently have permission to uninstall or change mods. You may need to right-click the Easy Uninstaller and "Run as Administrator".</value>
   </data>
   <data name="UninstallationSuccessful" xml:space="preserve">
     <value>Uninstallation successful</value>
