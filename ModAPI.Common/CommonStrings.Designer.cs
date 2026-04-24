@@ -19,7 +19,7 @@ namespace ModAPI.Common {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class CommonStrings {
@@ -39,7 +39,7 @@ namespace ModAPI.Common {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ModApi.Common.CommonStrings", typeof(CommonStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ModAPI.Common.CommonStrings", typeof(CommonStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to run modern mods. Do you want to download it?.
+        ///   Looks up a localized string similar to An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Do you want to download it?.
         /// </summary>
         public static string DllsUpdateAvailable {
             get {
@@ -88,20 +88,24 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Galactic Adventures was not found..
+        ///   Looks up a localized string similar to Spore or Spore Galactic Adventures was not found.
+        ///
+        ///Both Spore and Spore Galactic Adventures must be installed from disc, EA App, Steam, or GOG.
+        ///
+        ///Please see https://launcherkit.sporecommunity.com/support for further help..
         /// </summary>
-        public static string GalacticAdventuresNotFound {
+        public static string GameNotFound {
             get {
-                return ResourceManager.GetString("GalacticAdventuresNotFound", resourceCulture);
+                return ResourceManager.GetString("GameNotFound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Galactic Adventures was not found. Please specify the installation folder manually (usually called SPORE_EP1 or SPORE Galactic Adventures)..
+        ///   Looks up a localized string similar to Game not found.
         /// </summary>
-        public static string GalacticAdventuresNotFoundSpecifyManual {
+        public static string GameNotFoundTitle {
             get {
-                return ResourceManager.GetString("GalacticAdventuresNotFoundSpecifyManual", resourceCulture);
+                return ResourceManager.GetString("GameNotFoundTitle", resourceCulture);
             }
         }
         
@@ -115,47 +119,24 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid path.
+        ///   Looks up a localized string similar to Please launch Spore Galactic Adventures once from Steam. This will complete the installation of the game, and allow the Launcher Kit to work.
+        ///
+        ///Afterwards, always use the ModAPI Launcher to play the game.
+        ///
+        ///If you continue to get this message, or the game is not installed from Steam, then the game is likely not installed properly. Please see https://launcherkit.sporecommunity.com/support for further help..
         /// </summary>
-        public static string InvalidPathTitle {
+        public static string SteamDownloadedButNotLaunched {
             get {
-                return ResourceManager.GetString("InvalidPathTitle", resourceCulture);
+                return ResourceManager.GetString("SteamDownloadedButNotLaunched", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spore was not found..
+        ///   Looks up a localized string similar to Steam installation not completed.
         /// </summary>
-        public static string SporeNotFound {
+        public static string SteamDownloadedButNotLaunchedTitle {
             get {
-                return ResourceManager.GetString("SporeNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spore was not found. Please specify the installation folder manually (usually called SPORE)..
-        /// </summary>
-        public static string SporeNotFoundSpecifyManual {
-            get {
-                return ResourceManager.GetString("SporeNotFoundSpecifyManual", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Steam was not found..
-        /// </summary>
-        public static string SteamNotFound {
-            get {
-                return ResourceManager.GetString("SteamNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Steam was not found. Please specify the installation folder manually (usually C:\Program Files (x86)\Steam)..
-        /// </summary>
-        public static string SteamNotFoundSpecifyManual {
-            get {
-                return ResourceManager.GetString("SteamNotFoundSpecifyManual", resourceCulture);
+                return ResourceManager.GetString("SteamDownloadedButNotLaunchedTitle", resourceCulture);
             }
         }
         

@@ -62,8 +62,6 @@
     </Compile>
     <Compile Include="GameVersion.cs" />
     <Compile Include="InstalledMods.cs" />
-    <Compile Include="LauncherSettings.cs" />
-    <Compile Include="PathDialogs.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SporePath.cs" />

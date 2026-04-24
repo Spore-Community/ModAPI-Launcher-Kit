@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DllsUpdateAvailable" xml:space="preserve">
-    <value>An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to run modern mods. Do you want to download it?</value>
+    <value>An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Do you want to download it?</value>
   </data>
   <data name="DllsUpdateAvailableTitle" xml:space="preserve">
     <value>ModAPI DLLs Update Available</value>
@@ -126,29 +126,28 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="GalacticAdventuresNotFound" xml:space="preserve">
-    <value>Galactic Adventures was not found.</value>
+  <data name="GameNotFound" xml:space="preserve">
+    <value>Spore or Spore Galactic Adventures was not found.
+
+Both Spore and Spore Galactic Adventures must be installed from disc, EA App, Steam, or GOG.
+
+Please see https://launcherkit.sporecommunity.com/support for further help.</value>
   </data>
-  <data name="GalacticAdventuresNotFoundSpecifyManual" xml:space="preserve">
-    <value>Galactic Adventures was not found. Please specify the installation folder manually (usually called SPORE_EP1 or SPORE Galactic Adventures).</value>
+  <data name="GameNotFoundTitle" xml:space="preserve">
+    <value>Game not found</value>
   </data>
   <data name="InvalidPath" xml:space="preserve">
     <value>The path specified does not exist or is invalid.</value>
   </data>
-  <data name="InvalidPathTitle" xml:space="preserve">
-    <value>Invalid path</value>
+  <data name="SteamDownloadedButNotLaunched" xml:space="preserve">
+    <value>Please launch Spore Galactic Adventures once from Steam. This will complete the installation of the game, and allow the Launcher Kit to work.
+
+Afterwards, always use the ModAPI Launcher to play the game.
+
+If you continue to get this message, or the game is not installed from Steam, then the game is likely not installed properly. Please see https://launcherkit.sporecommunity.com/support for further help.</value>
   </data>
-  <data name="SporeNotFound" xml:space="preserve">
-    <value>Spore was not found.</value>
-  </data>
-  <data name="SporeNotFoundSpecifyManual" xml:space="preserve">
-    <value>Spore was not found. Please specify the installation folder manually (usually called SPORE).</value>
-  </data>
-  <data name="SteamNotFound" xml:space="preserve">
-    <value>Steam was not found.</value>
-  </data>
-  <data name="SteamNotFoundSpecifyManual" xml:space="preserve">
-    <value>Steam was not found. Please specify the installation folder manually (usually C:\Program Files (x86)\Steam).</value>
+  <data name="SteamDownloadedButNotLaunchedTitle" xml:space="preserve">
+    <value>Steam installation not completed</value>
   </data>
   <data name="UnauthorizedAccess" xml:space="preserve">
     <value>Unauthorized access. Try executing the launcher with Administrator Privileges (Right-click &gt; "Run as Administrator").</value>
