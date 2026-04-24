@@ -122,11 +122,11 @@ namespace ModAPI.Common
                 // Steam doesn't run the install script to create the registry keys until the game is launched from Steam for the first time
                 if (SporeIsInstalledOnSteam())
                 {
-                    MessageBox.Show(CommonStrings.SteamDownloadedButNotLaunched, CommonStrings.SteamDownloadedButNotLaunchedTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                    SupportInfo.ShowInfo(CommonStrings.SteamDownloadedButNotLaunched, CommonStrings.SteamDownloadedButNotLaunchedTitle, true, false);
                 }
                 else
                 {
-                    MessageBox.Show(CommonStrings.GameNotFound, CommonStrings.GameNotFoundTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                    SupportInfo.ShowError(CommonStrings.GameNotFound, CommonStrings.GameNotFoundTitle, false, false);
                 }
             }
             return false;

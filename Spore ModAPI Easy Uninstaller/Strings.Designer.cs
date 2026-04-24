@@ -19,7 +19,7 @@ namespace Spore_ModAPI_Easy_Uninstaller {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -61,7 +61,7 @@ namespace Spore_ModAPI_Easy_Uninstaller {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to uninstall the selected mods and all their components?.
+        ///   Looks up a localized string similar to Are you sure you want to uninstall the selected mods and all of their components?.
         /// </summary>
         internal static string AreYouSure {
             get {
@@ -106,7 +106,7 @@ namespace Spore_ModAPI_Easy_Uninstaller {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error, could not uninstall mod.
+        ///   Looks up a localized string similar to Could not uninstall mod.
         /// </summary>
         internal static string CouldNotUninstall {
             get {
@@ -124,11 +124,20 @@ namespace Spore_ModAPI_Easy_Uninstaller {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following mods were uninstalled successfully:.
+        ///   Looks up a localized string similar to The following mods were uninstalled:.
         /// </summary>
         internal static string ModsWereUninstalled {
             get {
                 return ResourceManager.GetString("ModsWereUninstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Easy Uninstaller does not currently have permission to uninstall or change mods. You may need to right-click the Easy Uninstaller and &quot;Run as Administrator&quot;..
+        /// </summary>
+        internal static string UnauthorizedAccess {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
             }
         }
         

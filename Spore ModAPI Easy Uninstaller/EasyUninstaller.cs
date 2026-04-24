@@ -88,11 +88,11 @@ namespace Spore_ModAPI_Easy_Uninstaller
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show(CommonStrings.UnauthorizedAccess, Strings.CouldNotUninstall, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SupportInfo.ShowWarning(Strings.UnauthorizedAccess, Strings.CouldNotUninstall, false);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Strings.CouldNotUninstall, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SupportInfo.ShowWarning(ex.Message, Strings.CouldNotUninstall, false);
             }
 
             if (successfulMods.Count > 0)
