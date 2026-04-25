@@ -19,7 +19,7 @@ namespace Spore_ModAPI_Easy_Installer {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Strings {
@@ -61,15 +61,6 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot; cancelled installation.
-        /// </summary>
-        internal static string CancelledInstallation {
-            get {
-                return ResourceManager.GetString("CancelledInstallation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Copying file.
         /// </summary>
         internal static string CopyingFile {
@@ -79,7 +70,7 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file given is not supported. Only .sporemod, .package and .exe files are supported..
+        ///   Looks up a localized string similar to This is not a valid mod file. Only .sporemod and .package files are supported..
         /// </summary>
         internal static string ErrorUnsupportedFile {
             get {
@@ -124,6 +115,15 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The mod &quot;$MODNAME$&quot; is being installed, please wait....
+        /// </summary>
+        internal static string InstallingMod {
+            get {
+                return ResourceManager.GetString("InstallingMod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing mod....
         /// </summary>
         internal static string InstallingModTitle {
@@ -133,75 +133,76 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The mod &quot;.
+        ///   Looks up a localized string similar to  cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help..
         /// </summary>
-        internal static string ModInstalled1 {
+        internal static string InvalidDllVersion {
             get {
-                return ResourceManager.GetString("ModInstalled1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot; has been installed successfully..
-        /// </summary>
-        internal static string ModInstalled2 {
-            get {
-                return ResourceManager.GetString("ModInstalled2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The mod &quot;.
-        /// </summary>
-        internal static string ModIsInstalling1 {
-            get {
-                return ResourceManager.GetString("ModIsInstalling1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot; is being installed. Please, wait until it finishes..
-        /// </summary>
-        internal static string ModIsInstalling2 {
-            get {
-                return ResourceManager.GetString("ModIsInstalling2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The mod &quot;.
-        /// </summary>
-        internal static string ModNotInstalled1 {
-            get {
-                return ResourceManager.GetString("ModNotInstalled1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot; could not be installed..
-        /// </summary>
-        internal static string ModNotInstalled2 {
-            get {
-                return ResourceManager.GetString("ModNotInstalled2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  cannot be installed, because it requires a greater version of the ModAPI Core DLLs.
-        ///Please, restart the launcher and allow it to update..
-        /// </summary>
-        internal static string UnsupportedDllVersion {
-            get {
-                return ResourceManager.GetString("UnsupportedDllVersion", resourceCulture);
+                return ResourceManager.GetString("InvalidDllVersion", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Error: mod cannot be installed.
         /// </summary>
-        internal static string UnsupportedDllVersionTitle {
+        internal static string InvalidDllVersionTitle {
             get {
-                return ResourceManager.GetString("UnsupportedDllVersionTitle", resourceCulture);
+                return ResourceManager.GetString("InvalidDllVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installation of the mod &quot;$MODNAME$&quot; was cancelled..
+        /// </summary>
+        internal static string ModCancelled {
+            get {
+                return ResourceManager.GetString("ModCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The mod &quot;$MODNAME$&quot; has been installed..
+        /// </summary>
+        internal static string ModInstalled {
+            get {
+                return ResourceManager.GetString("ModInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong when installing the mod &quot;$MODNAME$&quot;. This mod was not installed..
+        /// </summary>
+        internal static string ModNotInstalled {
+            get {
+                return ResourceManager.GetString("ModNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
+        ///
+        ///Required ModAPI DLLs version: $REQUIREDVERSION$ or higher.
+        /// </summary>
+        internal static string OutdatedDllVersion {
+            get {
+                return ResourceManager.GetString("OutdatedDllVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdated ModAPI DLLs version.
+        /// </summary>
+        internal static string OutdatedDllVersionTitle {
+            get {
+                return ResourceManager.GetString("OutdatedDllVersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Easy Installer does not currently have permission to install or change mods. You may need to right-click the Easy Installer and &quot;Run as Administrator&quot;..
+        /// </summary>
+        internal static string UnauthorizedAccess {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
             }
         }
     }

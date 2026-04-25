@@ -6,15 +6,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Xml;
+using System.Windows.Forms;
 using ModAPI.Common.Dialog;
 
 namespace ModAPI.Common.Update
 {
     public static class UpdateManager
     {
-        public static bool Development = false;
         public static List<string> LauncherKitUpdateUrls = new List<string>
         {
             // Cloudflare R2 + Cache
@@ -56,30 +54,11 @@ namespace ModAPI.Common.Update
             }
         }
 
-        public static bool HasValidDllsVersion(XmlDocument document)
-        {
-            var modNode = document.SelectSingleNode("/mod");
-
-            if (modNode != null)
-            {
-                Version requiredDllsVersion = null;
-                if (modNode.Attributes["dllsBuild"] != null)
-                    Version.TryParse(modNode.Attributes["dllsBuild"].Value, out requiredDllsVersion);
-
-                if (requiredDllsVersion != null &&
-                    requiredDllsVersion > CurrentDllsBuild)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public static void CheckForUpdates()
         {
             if ((Process.GetProcessesByName("SporeApp").Length > 0) || (Process.GetProcessesByName("SporeApp_ModAPIFix").Length > 0))
             {
-                MessageBox.Show("Please close Spore before attempting to use the Spore ModAPI Launcher Kit again. If you have just closed Spore, wait a moment for the game to fully exit.", string.Empty);
+                SupportInfo.ShowWarning(CommonStrings.GameAlreadyRunning, CommonStrings.GameAlreadyRunningTitle, true, false);
                 Process.GetCurrentProcess().Kill();
             }
 
@@ -121,7 +100,7 @@ namespace ModAPI.Common.Update
             {
                 List<Exception> exceptions = new List<Exception>();
                 bool didDownload = false;
-                        
+
                 // Try to download the update info file from the override path first
                 if (File.Exists(UpdaterOverridePath))
                 {
@@ -182,7 +161,7 @@ namespace ModAPI.Common.Update
                 if (!didDownload)
                 {
                     ShowUpdateCheckFailedMessage(exceptions);
-                    
+
                     // early return when failed
                     return;
                 }
@@ -195,9 +174,10 @@ namespace ModAPI.Common.Update
                     {
                         if (Version.Parse(updateInfoLines[1]) > CurrentVersion)
                         {
-                            string versionString = "Current version: " + CurrentVersion + "\nNew version: " + updateInfoLines[1];
+                            string currentLKVersion = SupportInfo.LauncherKitVersionString;
+                            string newLKVersion = updateInfoLines[1];
 
-                            if (MessageBox.Show("An update to the Spore ModAPI Launcher Kit is now available. Would you like to install it now?\n\n" + versionString, "Update Available", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(CommonStrings.LKUpdateAvailable.Replace("$NEWLK", newLKVersion).Replace("$CURRENTLK", currentLKVersion), CommonStrings.LKUpdateAvailableTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
                                 if (bool.Parse(updateInfoLines[2]))
                                 {
@@ -206,7 +186,7 @@ namespace ModAPI.Common.Update
                                 else
                                 {
                                     var dialog = new ProgressDialog(
-                                        "Spore ModAPI Launcher Kit is updating to " + updateInfoLines[1],
+                                        "Spore ModAPI Launcher Kit is updating to " + newLKVersion,
                                         "Spore ModAPI Launcher Kit updating",
                                         (s, e) =>
                                         {
@@ -231,7 +211,7 @@ namespace ModAPI.Common.Update
                                                     foreach (string arg in args)
                                                         currentArgs += "\"" + arg.TrimEnd('\\') + "\" ";
 
-                                                    string argOnePath = Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString().TrimEnd('\\');
+                                                    string argOnePath = Directory.GetParent(Assembly.GetEntryAssembly().Location).ToString().TrimEnd('\\');
                                                     if (!argOnePath.EndsWith(" "))
                                                         argOnePath = argOnePath + " ";
 
@@ -255,8 +235,11 @@ namespace ModAPI.Common.Update
 
                 if (DllsUpdater.HasDllsUpdate(out var githubRelease))
                 {
-                    var result = MessageBox.Show(CommonStrings.DllsUpdateAvailable, CommonStrings.DllsUpdateAvailableTitle, MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
+                    string newDllsVersion = githubRelease.tag_name;
+                    string currentDllsVersion = SupportInfo.ModAPIDllsVersionString;
+                    string currentLKVersion = SupportInfo.LauncherKitVersionString;
+                    var result = MessageBox.Show(CommonStrings.DllsUpdateAvailable.Replace("$NEWDLLS", newDllsVersion).Replace("$CURRENTDLLS", currentDllsVersion).Replace("$CURRENTLK$", currentLKVersion), CommonStrings.DllsUpdateAvailableTitle, MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
                     {
                         var dialog = new ProgressDialog(
                             CommonStrings.UpdatingDllsDialog + githubRelease.tag_name,
@@ -300,12 +283,12 @@ namespace ModAPI.Common.Update
 
             }
 
-            MessageBox.Show("The Launcher Kit could not connect to the update service. Try again in a few minutes, or check https://launcherkit.sporecommunity.com/support for help.\n\nCurrent version: "+ CurrentVersion + "\n\n" + exceptionText);
+            SupportInfo.ShowWarning(CommonStrings.UpdateCheckFailed + "\n\n" + exceptionText, CommonStrings.UpdateCheckFailedTitle, false, true);
         }
 
         static void ShowUnrecognizedUpdateInfoVersionMessage()
         {
-            MessageBox.Show("This update to the Spore ModAPI Launcher Kit must be downloaded manually.");
+            SupportInfo.ShowInfo("This update to the Spore ModAPI Launcher Kit must be downloaded manually. Please visit https://launcherkit.sporecommunity.com/support for more information.", CommonStrings.UpdateCheckFailedTitle, false, true);
         }
     }
 }

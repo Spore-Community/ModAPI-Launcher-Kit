@@ -9,11 +9,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Interop;
 using System.Xml;
 
 namespace Spore_ModAPI_Easy_Installer
@@ -67,12 +64,10 @@ namespace Spore_ModAPI_Easy_Installer
             else
             {
                 Application.EnableVisualStyles();
-                LauncherSettings.Load();
                 ModList.Load();
 
                 // ensure we find Spore & GA as early as possible
-                if (PathDialogs.ProcessSpore() == null || 
-                    PathDialogs.ProcessGalacticAdventures() == null)
+                if (!SporePath.IsGameInstalled(true))
                 {
                     return;
                 }
@@ -104,7 +99,7 @@ namespace Spore_ModAPI_Easy_Installer
                         FileType fileType = GetFileType(Path.GetFileName(inputPath));
                         string modName = Path.GetFileNameWithoutExtension(inputPath);
                         ResultType result = ResultType.UnsupportedFile;
-                        
+
 
                         try
                         {
@@ -217,10 +212,10 @@ namespace Spore_ModAPI_Easy_Installer
                     return Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString();
 
                 case FileType.Package:
-                    return GetGADataPath();
+                    return SporePath.GetDataPath(SporePath.Game.GalacticAdventures);
 
                 case FileType.Spore_Package:
-                    return GetSporeDataPath();
+                    return SporePath.GetDataPath(SporePath.Game.Spore);
 
                 default:
                     return null;
@@ -245,32 +240,6 @@ namespace Spore_ModAPI_Easy_Installer
                 default:
                     return null;
             }
-        }
-
-        static string GetGADataPath()
-        {
-            string path = PathDialogs.ProcessGalacticAdventures();
-
-            if (path != null)
-            {
-                // now we have the path to SporebinEP1; move it to Data
-                path = SporePath.MoveToData(SporePath.Game.GalacticAdventures, SporePath.GetRealParent(path));
-            }
-
-            return path;
-        }
-
-        static string GetSporeDataPath()
-        {
-            string path = PathDialogs.ProcessSpore();
-
-            if (path != null)
-            {
-                // now we have the path to Sporebin; move it to Data
-                path = SporePath.MoveToData(SporePath.Game.Spore, SporePath.GetRealParent(path));
-            }
-
-            return path;
         }
 
         static ResultType InstallPackage(string inputFile, string modName)
@@ -382,7 +351,7 @@ namespace Spore_ModAPI_Easy_Installer
                         }
                     }
 
-                    eventHandler?.Invoke(null, (int)((entriesExtracted / (float) numEntries) * 100.0f));
+                    eventHandler?.Invoke(null, (int)((entriesExtracted / (float)numEntries) * 100.0f));
                     entriesExtracted++;
                 }
             }
@@ -390,24 +359,20 @@ namespace Spore_ModAPI_Easy_Installer
             return ResultType.Success;
         }
 
-        private static bool CheckModCoreDllsVersion(ZipArchiveEntry xmlEntry)
+        private static Version GetModCoreDllsVersion(ZipArchiveEntry xmlEntry)
         {
-            try
+            using (var stream = xmlEntry.Open())
             {
-                using (var stream = xmlEntry.Open())
-                {
-                    var document = new XmlDocument();
-                    document.Load(stream);
+                var document = new XmlDocument();
+                document.Load(stream);
 
-                    if (!UpdateManager.HasValidDllsVersion(document))
-                    {
-                        return false;
-                    }
+                var modNode = document.SelectSingleNode("/mod");
+                if (modNode != null && modNode.Attributes["dllsBuild"] != null)
+                {
+                    return Version.Parse(modNode.Attributes["dllsBuild"].Value);
                 }
             }
-            catch {
-            }
-            return true;
+            return null;
         }
 
         static ResultType TryExecuteInstaller(string inputFile, string modName)
@@ -420,12 +385,24 @@ namespace Spore_ModAPI_Easy_Installer
 
                 if (xmlEntry != null)
                 {
-                    if (!CheckModCoreDllsVersion(xmlEntry))
+                    Version modCoreDllsVersion = null;
+                    try
                     {
-                        MessageBox.Show($"\"{modName}\"{Strings.UnsupportedDllVersion}", 
-                            Strings.UnsupportedDllVersionTitle);
+                        modCoreDllsVersion = GetModCoreDllsVersion(xmlEntry);
+                    }
+                    // If the version cannot be read due to an exception, show an error and don't install the mod
+                    catch
+                    {
+                        SupportInfo.ShowWarning(Strings.InvalidDllVersion.Replace("$MODNAME$", modName), Strings.InvalidDllVersionTitle, false, false);
                         return ResultType.ModNotInstalled;
                     }
+                    // If the version can be read but is outdated, show an error and don't install the mod
+                    if (modCoreDllsVersion != null && modCoreDllsVersion > UpdateManager.CurrentDllsBuild)
+                    {
+                        SupportInfo.ShowWarning(Strings.OutdatedDllVersion.Replace("$MODNAME$", modName).Replace("$REQUIREDVERSION$", modCoreDllsVersion.ToString()), Strings.OutdatedDllVersionTitle, false, false);
+                        return ResultType.ModNotInstalled;
+                    }
+                    // If the version is not specified, continue installing (the value is optional because not all mods use the ModAPI SDK)
 
                     string modPath = Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString(), "ModConfigs", modName);
                     if (Directory.Exists(modPath))
@@ -508,7 +485,7 @@ namespace Spore_ModAPI_Easy_Installer
 
                 Thread thread = new Thread(() =>
                 {
-                    var dialog = new ProgressDialog(Strings.ModIsInstalling1 + modName + "\" is being installed", Strings.InstallingModTitle, (s, e) =>
+                    var dialog = new ProgressDialog(Strings.InstallingMod.Replace("$MODNAME$", modName), Strings.InstallingModTitle, (s, e) =>
                     {
                         try
                         {
@@ -563,7 +540,7 @@ namespace Spore_ModAPI_Easy_Installer
                 // the Installer existed but there was a problem
                 return result;
             }
-            
+
         }
 
         static void RemoveModFiles(ModConfiguration mod)
@@ -592,8 +569,8 @@ namespace Spore_ModAPI_Easy_Installer
             switch (errorType)
             {
                 case ResultType.UnsupportedFile: return Strings.ErrorUnsupportedFile;
-                case ResultType.GalacticAdventuresNotFound: return CommonStrings.GalacticAdventuresNotFound;
-                case ResultType.UnauthorizedAccess: return CommonStrings.UnauthorizedAccess;
+                case ResultType.GalacticAdventuresNotFound: return CommonStrings.GameNotFound;
+                case ResultType.UnauthorizedAccess: return Strings.UnauthorizedAccess;
                 case ResultType.InvalidPath: return CommonStrings.InvalidPath;
 
                 default:
@@ -608,11 +585,11 @@ namespace Spore_ModAPI_Easy_Installer
             if (result == ResultType.Success)
             {
                 // show message to the user
-                return Strings.ModInstalled1 + modName + Strings.ModInstalled2;
+                return Strings.ModInstalled.Replace("$MODNAME$", modName);
             }
             else if (result == ResultType.ModNotInstalled)
             {
-                return Strings.ModInstalled1 + modName + Strings.CancelledInstallation;
+                return Strings.ModCancelled.Replace("$MODNAME$", modName);
             }
             else
             {
@@ -622,7 +599,7 @@ namespace Spore_ModAPI_Easy_Installer
                 }
                 // show message to the user
                 //MessageBox.Show(Strings.ModNotInstalled1 + modName + Strings.ModNotInstalled2 + " " + errorString, Strings.InstallationCancelled);
-                return Strings.ModNotInstalled1 + modName + Strings.ModNotInstalled2 + " " + errorString;
+                return Strings.ModNotInstalled.Replace("$MODNAME$", modName) + "\n\n" + errorString;
             }
         }
 

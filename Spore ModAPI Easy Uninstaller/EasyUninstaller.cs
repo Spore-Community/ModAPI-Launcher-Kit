@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Diagnostics;
@@ -18,10 +16,6 @@ namespace Spore_ModAPI_Easy_Uninstaller
 
     public static class EasyUninstaller
     {
-
-        private static string SporeDataPath;
-        private static string SporeDataEP1Path;
-        private static string DllPath;
 
         private static InstalledMods Mods;
 
@@ -44,11 +38,8 @@ namespace Spore_ModAPI_Easy_Uninstaller
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                LauncherSettings.Load();
-
                 // ensure we find Spore & GA as early as possible
-                if (PathDialogs.ProcessSpore() == null ||
-                    PathDialogs.ProcessGalacticAdventures() == null)
+                if (!SporePath.IsGameInstalled(true))
                 {
                     return;
                 }
@@ -97,11 +88,11 @@ namespace Spore_ModAPI_Easy_Uninstaller
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show(CommonStrings.UnauthorizedAccess, Strings.CouldNotUninstall, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SupportInfo.ShowWarning(Strings.UnauthorizedAccess, Strings.CouldNotUninstall, false);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Strings.CouldNotUninstall, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SupportInfo.ShowWarning(ex.Message, Strings.CouldNotUninstall, false);
             }
 
             if (successfulMods.Count > 0)
@@ -122,61 +113,18 @@ namespace Spore_ModAPI_Easy_Uninstaller
             }
         }
 
-        private static void CheckSporeDataEP1Path(string modName)
-        {
-            if (SporeDataEP1Path == null)
-            {
-                string path = PathDialogs.ProcessGalacticAdventures();
-                if (path == null && modName != null)
-                {
-                    throw new Exception(Strings.CouldNotUninstall + " \"" + modName + "\"\n" + CommonStrings.GalacticAdventuresNotFound);
-                }
-                else
-                {
-                    SporeDataEP1Path = SporePath.MoveToData(SporePath.Game.GalacticAdventures, SporePath.GetRealParent(path));
-                }
-            }
-        }
-
-        private static void CheckSporeDataPath(string modName)
-        {
-            if (SporeDataPath == null)
-            {
-                string path = PathDialogs.ProcessSpore();
-                if (path == null && modName != null)
-                {
-                    throw new Exception(Strings.CouldNotUninstall + " \"" + modName + "\"\n" + CommonStrings.SporeNotFound);
-                }
-                else
-                {
-                    SporeDataPath = SporePath.MoveToData(SporePath.Game.Spore, SporePath.GetRealParent(path));
-                }
-            }
-        }
-
-        private static void CheckDllPath()
-        {
-            if (DllPath == null)
-            {
-                DllPath = Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString();
-            }
-        }
-
-        private static string GetOutputPath(string pathType, string modName)
+        private static string GetOutputPath(string pathType)
         {
             switch (pathType)
             {
                 case "GalacticAdventures":
-                    CheckSporeDataEP1Path(modName);
-                    return SporeDataEP1Path;
+                    return SporePath.GetDataPath(SporePath.Game.GalacticAdventures);
 
                 case "Spore":
-                    CheckSporeDataPath(modName);
-                    return SporeDataPath;
+                    return SporePath.GetDataPath(SporePath.Game.Spore);
 
                 case "None":
-                    CheckDllPath();
-                    return DllPath;
+                    return Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString();
 
                 default:
                     return null;
@@ -188,19 +136,21 @@ namespace Spore_ModAPI_Easy_Uninstaller
         {
             foreach (InstalledFile file in mod.InstalledFiles)
             {
-                string outputPath = GetOutputPath(file.PathType, mod.Name);
+                string outputPath = GetOutputPath(file.PathType);
 
-                if (outputPath != null)
+                if (outputPath == null)
                 {
-                    string outputFile = Path.Combine(outputPath, file.Name);
-                    string outputFile2 = Path.Combine(outputPath, "mLibs", file.Name);
-                    if (File.Exists(outputFile))
-                        File.Delete(outputFile);
-                    if (File.Exists(outputFile2)) //if ((file.Name.Contains("-disk") || file.Name.Contains("-steam") || file.Name.Contains("-steam_patched")))
-                        File.Delete(outputFile2);
+                    throw new Exception(Strings.CouldNotUninstall + " \"" + mod.Name + "\"\n" + CommonStrings.GameNotFound);
                 }
+
+                string outputFile = Path.Combine(outputPath, file.Name);
+                string outputFile2 = Path.Combine(outputPath, "mLibs", file.Name);
+                if (File.Exists(outputFile))
+                    File.Delete(outputFile);
+                if (File.Exists(outputFile2)) //if ((file.Name.Contains("-disk") || file.Name.Contains("-steam") || file.Name.Contains("-steam_patched")))
+                    File.Delete(outputFile2);
             }
-            
+
             string modConfigPath = Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString(), "ModConfigs", mod.Name);
             if (Directory.Exists(modConfigPath))
                 Directory.Delete(modConfigPath, true);

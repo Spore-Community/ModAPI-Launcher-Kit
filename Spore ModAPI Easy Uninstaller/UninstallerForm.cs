@@ -31,7 +31,7 @@ namespace Spore_ModAPI_Easy_Uninstaller
             this.btnCancel.Text = Strings.Cancel;
             this.btnUninstall.Text = Strings.UninstallSelected + " (0)";
             this.btnUninstall.Enabled = false;
-            this.label2.Text = "Spore ModAPI Launcher Kit Version " + UpdateManager.CurrentVersion.ToString() + "\nDLLs Build " + UpdateManager.CurrentDllsBuild;
+            this.label2.Text = $"Spore {SupportInfo.GameFullVersionInfoString}\nLauncher Kit version {SupportInfo.LauncherKitVersionString}\nModAPI DLLs version {SupportInfo.ModAPIDllsVersionString}";
             this.BringToFront();
         }
 
@@ -229,7 +229,7 @@ namespace Spore_ModAPI_Easy_Uninstaller
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, CommonStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "Easy Uninstaller Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

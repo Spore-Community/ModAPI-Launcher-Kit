@@ -19,7 +19,7 @@ namespace SporeModAPI_Launcher {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -61,59 +61,99 @@ namespace SporeModAPI_Launcher {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not apply the Steam fix. To apply it, you can do one of these two options:
-        /// - Re-execute the Launcher with Administrator Privileges.
+        ///   Looks up a localized string similar to The Launcher Kit needs to download a compatibility fix for your current game version. Do you want to continue?.
+        /// </summary>
+        public static string CompatibilityFixDownload {
+            get {
+                return ResourceManager.GetString("CompatibilityFixDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading compatibility fix.
+        /// </summary>
+        public static string CompatibilityFixDownloadTitle {
+            get {
+                return ResourceManager.GetString("CompatibilityFixDownloadTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Launcher Kit could not apply an EA App compatibility fix. Please try the following:
+        ///- Ensure you have a stable internet connection
+        /// - Right click the Spore ModAPI Launcher and &quot;Run as Administrator&quot; once, to allow the fix to be applied, then exit the game and run it normally.
+        /// </summary>
+        public static string CompatibilityFixErrorEA {
+            get {
+                return ResourceManager.GetString("CompatibilityFixErrorEA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Launcher Kit could not apply a Steam compatibility fix. To apply it, you can do one of these two options:
+        /// - Right click the Spore ModAPI Launcher and &quot;Run as Administrator&quot; once, to allow the fix to be applied, then exit the game and run it normally
         ///or
         /// - Create a file called &apos;steam_appid.txt&apos;, with the numbers &apos;17390&apos; inside, in the folder $PATH$.
         /// </summary>
-        public static string CannotApplySteamFix {
+        public static string CompatibilityFixErrorSteam {
             get {
-                return ResourceManager.GetString("CannotApplySteamFix", resourceCulture);
+                return ResourceManager.GetString("CompatibilityFixErrorSteam", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not apply the Steam fix.
+        ///   Looks up a localized string similar to Could not apply compatibility fix.
         /// </summary>
-        public static string CannotApplySteamFixTitle {
+        public static string CompatibilityFixErrorTitle {
             get {
-                return ResourceManager.GetString("CannotApplySteamFixTitle", resourceCulture);
+                return ResourceManager.GetString("CompatibilityFixErrorTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading ModAPI Fix.
+        ///   Looks up a localized string similar to Something went wrong while starting or loading your mods into Spore. The game may start, but some mods will not work correctly.
+        ///
+        ///Please see https://launcherkit.sporecommunity.com/support for further help..
         /// </summary>
-        public static string DownloadFixTitle {
+        public static string GameNotExecuted {
             get {
-                return ResourceManager.GetString("DownloadFixTitle", resourceCulture);
+                return ResourceManager.GetString("GameNotExecuted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EA App and Origin users need to download an additional file in order for mods to work. If you press OK, the launcher will download and apply this additional file..
+        ///   Looks up a localized string similar to Your current game version is not compatible with the LAA/4GB patch. The game may not launch.
+        ///
+        ///You can do one of the following:
+        ///- Downgrade to a game version that is compatible with the LAA/4GB patch
+        ///- Remove the LAA/4GB patch using the same tool used to apply it
+        ///- Remove the LAA/4GB patch by verifying the game files for Spore Galactic Adventures
+        ///
+        ///The LAA/4GB patch is not required to use mods, but may help improve game stability.
+        ///
+        ///Please see https://launcherkit.sporecommunity.com/support for further [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string DownloadOriginFix {
+        public static string LAAUnsupported {
             get {
-                return ResourceManager.GetString("DownloadOriginFix", resourceCulture);
+                return ResourceManager.GetString("LAAUnsupported", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File needed.
+        ///   Looks up a localized string similar to LAA/4GB Patch Incompatible.
         /// </summary>
-        public static string FileNeeded {
+        public static string LAAUnsupportedTitle {
             get {
-                return ResourceManager.GetString("FileNeeded", resourceCulture);
+                return ResourceManager.GetString("LAAUnsupportedTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something went wrong while starting or injecting your mods into Spore. The game may start, but some mods will not work correctly. Please report the issue, along with a screenshot of this error, using the instructions at the following website:.
+        ///   Looks up a localized string similar to Spore ModAPI Launcher Error.
         /// </summary>
-        public static string GalacticAdventuresNotExecuted {
+        public static string LauncherError {
             get {
-                return ResourceManager.GetString("GalacticAdventuresNotExecuted", resourceCulture);
+                return ResourceManager.GetString("LauncherError", resourceCulture);
             }
         }
         
@@ -136,12 +176,24 @@ namespace SporeModAPI_Launcher {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SporeModLoader has been detected, running the Launcher Kit alongside SporeModLoader is unsupported.
+        ///   Looks up a localized string similar to Running the Spore ModAPI Launcher as Administrator (by right-clicking and selecting &quot;Run as Administrator&quot;) is not recommended.
+        ///
+        ///This can be a security risk and can also cause problems with game functionality. You may be unable to load creations into Spore by dragging their PNGs into the game window.
+        ///
+        ///Are you sure you want to continue?.
+        /// </summary>
+        public static string RunAsAdminWarning {
+            get {
+                return ResourceManager.GetString("RunAsAdminWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SporeModLoader has been detected. Running the Launcher Kit alongside SporeModLoader is unsupported.
         ///
         ///You have the the following options:
         ///- Remove SporeModLoader to use the Launcher Kit by removing $PATH$
-        ///- Use SporeModLoader instead of the Launcher Kit
-        ///.
+        ///- Use SporeModLoader instead of the Launcher Kit.
         /// </summary>
         public static string SporeModLoaderDetected {
             get {
@@ -159,7 +211,13 @@ namespace SporeModAPI_Launcher {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your current Spore game version is not compatible with this Launcher Kit version. If you downloaded the game from EA App, Steam, or GOG, please update to version 3.1.0.29 to proceed. If you&apos;re using a higher version of Spore, please see https://launcherkit.sporecommunity.com/support..
+        ///   Looks up a localized string similar to Your current Spore game version is not compatible with this Launcher Kit version.
+        ///
+        ///Both Spore and Spore Galactic Adventures must be installed from disc, EA App, Steam, or GOG.
+        ///
+        ///If you downloaded the game from EA App, Steam, or GOG, please ensure the game is up-to-date.
+        ///
+        ///Please see https://launcherkit.sporecommunity.com/support for further help..
         /// </summary>
         public static string UnsupportedSporeVersion {
             get {

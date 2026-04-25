@@ -58,9 +58,9 @@ namespace Spore_ModAPI_Easy_Installer
         int _installerMode = 0; //0 = show components list, 1 = don't show components list
         bool _isModMatched = false;
         bool _dontUseLegacyPackagePlacement = false;
-        public static string GaDataPath = SporePath.MoveToData(SporePath.Game.GalacticAdventures, SporePath.GetRealParent(PathDialogs.ProcessGalacticAdventures()));
+        public static string GaDataPath = SporePath.GetDataPath(SporePath.Game.GalacticAdventures);
 
-        public static string SporeDataPath = SporePath.MoveToData(SporePath.Game.Spore, SporePath.GetRealParent(PathDialogs.ProcessSpore()));
+        public static string SporeDataPath = SporePath.GetDataPath(SporePath.Game.Spore);
 
         private ResultType _result = ResultType.ModNotInstalled;
 
@@ -70,10 +70,11 @@ namespace Spore_ModAPI_Easy_Installer
             //LauncherSettings.Load();
             installerWindows.Add(this);
 
-            if (!Directory.Exists(SporeDataPath))
+            // TODO: do we need to show an error if data folders not found? PathDialogs would've shown a dialog, but could return null, so this code would've continued with a null path
+            /*if (!Directory.Exists(SporeDataPath))
                 PathDialogs.ProcessSpore();
             if (!Directory.Exists(GaDataPath))
-                PathDialogs.ProcessGalacticAdventures();
+                PathDialogs.ProcessGalacticAdventures();*/
 
             ModName = modName.Trim('"');
             XmlInstallerCancellation.Cancellation.Add(ModName, false);
@@ -151,8 +152,8 @@ namespace Spore_ModAPI_Easy_Installer
             {
                 ModInfoVersion = Version.Parse(Document.SelectSingleNode("/mod").Attributes["installerSystemVersion"].Value);
 
-                if ((ModInfoVersion == new Version(1, 0, 0, 0)) || 
-                    (ModInfoVersion == new Version(1, 0, 1, 0)) || 
+                if ((ModInfoVersion == new Version(1, 0, 0, 0)) ||
+                    (ModInfoVersion == new Version(1, 0, 1, 0)) ||
                     (ModInfoVersion == new Version(1, 0, 1, 1)) ||
                     (ModInfoVersion == new Version(1, 0, 1, 2)))
                 {
@@ -180,7 +181,7 @@ namespace Spore_ModAPI_Easy_Installer
                         if (Document.SelectSingleNode("/mod").Attributes["mode"].Value == "compatOnly")
                             _installerMode = 1;
                     }
-                    else if ((ModInfoVersion == new Version(1, 0, 1, 0)) || 
+                    else if ((ModInfoVersion == new Version(1, 0, 1, 0)) ||
                              (ModInfoVersion == new Version(1, 0, 1, 1)) ||
                              (ModInfoVersion == new Version(1, 0, 1, 2)))
                     {
@@ -209,7 +210,7 @@ namespace Spore_ModAPI_Easy_Installer
                         throw new Exception("This Mod's installer does not have a Unique Identifier. Please inform the mod's developer of this.");
 
                     ModConfiguration[] configs = EasyInstaller.ModList.ModConfigurations.ToArray();
-                    
+
                     foreach (ModConfiguration mod in configs)
                     {
                         if (mod.Unique == ModUnique)
@@ -619,7 +620,7 @@ namespace Spore_ModAPI_Easy_Installer
                 InstallationCompleteDescriptionTextBlock.Text = "The mod \"" + ModDisplayName + "\" has been installed.";
                 _installerState = 1;
                 CollapseButtons();
-                
+
                 var anim = new DoubleAnimation()
                 {
                     Duration = _time,
@@ -1311,7 +1312,7 @@ namespace Spore_ModAPI_Easy_Installer
                 {
                     if (Directory.Exists(ModConfigPath))
                         DeleteFolder(ModConfigPath);
-                    
+
                 }
                 XmlInstallerCancellation.Cancellation[ModName] = true;
             }
@@ -1331,7 +1332,7 @@ namespace Spore_ModAPI_Easy_Installer
             if (_isConfigurator)
                 Environment.Exit((int)_result);
         }
-                        
+
         private void SplashBorder_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
@@ -1386,14 +1387,16 @@ namespace Spore_ModAPI_Easy_Installer
                         new DirectoryInfo(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString()),
                         new DirectoryInfo(Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).ToString(), "mLibs"))
                     };
-                foreach (DirectoryInfo info in infos) {
-                List<FileInfo> files = info.EnumerateFiles(RemovalFileNames[i]).ToList();
-
-                foreach (FileInfo f in files)
+                foreach (DirectoryInfo info in infos)
                 {
-                    if (File.Exists(f.FullName))
-                        File.Delete(f.FullName);
-                } }
+                    List<FileInfo> files = info.EnumerateFiles(RemovalFileNames[i]).ToList();
+
+                    foreach (FileInfo f in files)
+                    {
+                        if (File.Exists(f.FullName))
+                            File.Delete(f.FullName);
+                    }
+                }
             }
         }
     }

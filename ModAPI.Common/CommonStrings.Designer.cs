@@ -19,7 +19,7 @@ namespace ModAPI.Common {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class CommonStrings {
@@ -39,7 +39,7 @@ namespace ModAPI.Common {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ModApi.Common.CommonStrings", typeof(CommonStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ModAPI.Common.CommonStrings", typeof(CommonStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,11 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to run modern mods. Do you want to download it?.
+        ///   Looks up a localized string similar to An update to the ModAPI DLLs is available. It includes new features and bugfixes, and is required to use newer mods. Would you like to install it now?
+        ///
+        ///Current Launcher Kit version: $CURRENTLK$
+        ///Current ModAPI DLLs version: $CURRENTDLLS$
+        ///New ModAPI DLLs version: $NEWDLLS$.
         /// </summary>
         public static string DllsUpdateAvailable {
             get {
@@ -79,29 +83,44 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
+        ///   Looks up a localized string similar to Please close Spore before using the Launcher Kit again.
+        ///
+        ///If you have just closed Spore, wait a moment for the game to fully exit. If you continue to get this error, please restart your computer..
         /// </summary>
-        public static string Error {
+        public static string GameAlreadyRunning {
             get {
-                return ResourceManager.GetString("Error", resourceCulture);
+                return ResourceManager.GetString("GameAlreadyRunning", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Galactic Adventures was not found..
+        ///   Looks up a localized string similar to Game already running.
         /// </summary>
-        public static string GalacticAdventuresNotFound {
+        public static string GameAlreadyRunningTitle {
             get {
-                return ResourceManager.GetString("GalacticAdventuresNotFound", resourceCulture);
+                return ResourceManager.GetString("GameAlreadyRunningTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Galactic Adventures was not found. Please specify the installation folder manually (usually called SPORE_EP1 or SPORE Galactic Adventures)..
+        ///   Looks up a localized string similar to Spore or Spore Galactic Adventures was not found.
+        ///
+        ///Both Spore and Spore Galactic Adventures must be installed from disc, EA App, Steam, or GOG.
+        ///
+        ///Please see https://launcherkit.sporecommunity.com/support for further help..
         /// </summary>
-        public static string GalacticAdventuresNotFoundSpecifyManual {
+        public static string GameNotFound {
             get {
-                return ResourceManager.GetString("GalacticAdventuresNotFoundSpecifyManual", resourceCulture);
+                return ResourceManager.GetString("GameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game not found.
+        /// </summary>
+        public static string GameNotFoundTitle {
+            get {
+                return ResourceManager.GetString("GameNotFoundTitle", resourceCulture);
             }
         }
         
@@ -115,65 +134,63 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid path.
+        ///   Looks up a localized string similar to An update to the Spore ModAPI Launcher Kit is now available. Would you like to install it now?
+        ///
+        ///Current Launcher Kit version: $CURRENTLK$
+        ///New Launcher Kit version: $NEWLKS$.
         /// </summary>
-        public static string InvalidPathTitle {
+        public static string LKUpdateAvailable {
             get {
-                return ResourceManager.GetString("InvalidPathTitle", resourceCulture);
+                return ResourceManager.GetString("LKUpdateAvailable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spore was not found..
+        ///   Looks up a localized string similar to Launcher Kit Update Available.
         /// </summary>
-        public static string SporeNotFound {
+        public static string LKUpdateAvailableTitle {
             get {
-                return ResourceManager.GetString("SporeNotFound", resourceCulture);
+                return ResourceManager.GetString("LKUpdateAvailableTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Spore was not found. Please specify the installation folder manually (usually called SPORE)..
+        ///   Looks up a localized string similar to Please launch Spore Galactic Adventures once from Steam. This will complete the installation of the game, and allow the Launcher Kit to work.
+        ///
+        ///Afterwards, always use the ModAPI Launcher to play the game.
+        ///
+        ///If you continue to get this message, or the game is not installed from Steam, then the game is likely not installed properly. Please see https://launcherkit.sporecommunity.com/support for further help..
         /// </summary>
-        public static string SporeNotFoundSpecifyManual {
+        public static string SteamDownloadedButNotLaunched {
             get {
-                return ResourceManager.GetString("SporeNotFoundSpecifyManual", resourceCulture);
+                return ResourceManager.GetString("SteamDownloadedButNotLaunched", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Steam was not found..
+        ///   Looks up a localized string similar to Steam installation not completed.
         /// </summary>
-        public static string SteamNotFound {
+        public static string SteamDownloadedButNotLaunchedTitle {
             get {
-                return ResourceManager.GetString("SteamNotFound", resourceCulture);
+                return ResourceManager.GetString("SteamDownloadedButNotLaunchedTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Steam was not found. Please specify the installation folder manually (usually C:\Program Files (x86)\Steam)..
+        ///   Looks up a localized string similar to The Launcher Kit could not connect to the update service. Try again in a few minutes, or check https://launcherkit.sporecommunity.com/support for help..
         /// </summary>
-        public static string SteamNotFoundSpecifyManual {
+        public static string UpdateCheckFailed {
             get {
-                return ResourceManager.GetString("SteamNotFoundSpecifyManual", resourceCulture);
+                return ResourceManager.GetString("UpdateCheckFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unauthorized access. Try executing the launcher with Administrator Privileges (Right-click &gt; &quot;Run as Administrator&quot;)..
+        ///   Looks up a localized string similar to Launcher Kit Update.
         /// </summary>
-        public static string UnauthorizedAccess {
+        public static string UpdateCheckFailedTitle {
             get {
-                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error: Unauthorized access.
-        /// </summary>
-        public static string UnauthorizedAccessTitle {
-            get {
-                return ResourceManager.GetString("UnauthorizedAccessTitle", resourceCulture);
+                return ResourceManager.GetString("UpdateCheckFailedTitle", resourceCulture);
             }
         }
         

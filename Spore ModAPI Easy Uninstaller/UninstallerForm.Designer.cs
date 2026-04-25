@@ -35,11 +35,11 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnUninstall = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
             this.MainColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ModNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModDisplayNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModConfiguration = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,18 +47,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(17, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(278, 18);
+            this.label1.Size = new System.Drawing.Size(349, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Choose the mod(s) you want to uninstall:";
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(405, 377);
+            this.btnCancel.Location = new System.Drawing.Point(540, 464);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -67,9 +69,10 @@
             // btnUninstall
             // 
             this.btnUninstall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUninstall.Location = new System.Drawing.Point(239, 377);
+            this.btnUninstall.Location = new System.Drawing.Point(319, 464);
+            this.btnUninstall.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUninstall.Name = "btnUninstall";
-            this.btnUninstall.Size = new System.Drawing.Size(160, 23);
+            this.btnUninstall.Size = new System.Drawing.Size(213, 28);
             this.btnUninstall.TabIndex = 2;
             this.btnUninstall.Text = "Uninstall";
             this.btnUninstall.UseVisualStyleBackColor = true;
@@ -107,27 +110,20 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.Location = new System.Drawing.Point(13, 50);
+            this.dataGridView1.Location = new System.Drawing.Point(17, 62);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 30;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(464, 311);
+            this.dataGridView1.Size = new System.Drawing.Size(619, 383);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 382);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Version ";
             // 
             // MainColumn
             // 
             this.MainColumn.HeaderText = "Uninstall";
+            this.MainColumn.MinimumWidth = 6;
             this.MainColumn.Name = "MainColumn";
             this.MainColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.MainColumn.Width = 30;
@@ -147,26 +143,41 @@
             this.ModDisplayNames.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ModDisplayNames.DataPropertyName = "DisplayName";
             this.ModDisplayNames.HeaderText = "Mod Display Names";
+            this.ModDisplayNames.MinimumWidth = 6;
             this.ModDisplayNames.Name = "ModDisplayNames";
             this.ModDisplayNames.ReadOnly = true;
             // 
             // ModConfiguration
             // 
             this.ModConfiguration.HeaderText = "Mod Configuration";
+            this.ModConfiguration.MinimumWidth = 6;
             this.ModConfiguration.Name = "ModConfiguration";
             this.ModConfiguration.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ModConfiguration.Width = 125;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 449);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Version ";
             // 
             // UninstallerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 412);
+            this.ClientSize = new System.Drawing.Size(656, 507);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnUninstall);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UninstallerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spore ModAPI Easy Uninstaller";

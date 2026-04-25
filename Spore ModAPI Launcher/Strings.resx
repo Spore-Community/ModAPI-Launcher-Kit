@@ -117,17 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DownloadFixTitle" xml:space="preserve">
-    <value>Downloading ModAPI Fix</value>
+  <data name="CompatibilityFixDownloadTitle" xml:space="preserve">
+    <value>Downloading compatibility fix</value>
   </data>
-  <data name="DownloadOriginFix" xml:space="preserve">
-    <value>EA App and Origin users need to download an additional file in order for mods to work. If you press OK, the launcher will download and apply this additional file.</value>
+  <data name="CompatibilityFixDownload" xml:space="preserve">
+    <value>The Launcher Kit needs to download a compatibility fix for your current game version. Do you want to continue?</value>
   </data>
-  <data name="FileNeeded" xml:space="preserve">
-    <value>File needed</value>
-  </data>
-  <data name="GalacticAdventuresNotExecuted" xml:space="preserve">
-    <value>Something went wrong while starting or injecting your mods into Spore. The game may start, but some mods will not work correctly. Please report the issue, along with a screenshot of this error, using the instructions at the following website:</value>
+  <data name="GameNotExecuted" xml:space="preserve">
+    <value>Something went wrong while starting or loading your mods into Spore. The game may start, but some mods will not work correctly.
+
+Please see https://launcherkit.sporecommunity.com/support for further help.</value>
   </data>
   <data name="ProcessNotResumed" xml:space="preserve">
     <value>Process thread could not be resumed.</value>
@@ -135,30 +134,65 @@
   <data name="ProcessNotStarted" xml:space="preserve">
     <value>Could not start process.</value>
   </data>
-  <data name="CannotApplySteamFix" xml:space="preserve">
-    <value>Could not apply the Steam fix. To apply it, you can do one of these two options:
- - Re-execute the Launcher with Administrator Privileges.
+  <data name="CompatibilityFixErrorSteam" xml:space="preserve">
+    <value>The Launcher Kit could not apply a Steam compatibility fix. To apply it, you can do one of these two options:
+ - Right click the Spore ModAPI Launcher and "Run as Administrator" once, to allow the fix to be applied, then exit the game and run it normally
 or
  - Create a file called 'steam_appid.txt', with the numbers '17390' inside, in the folder $PATH$</value>
   </data>
-  <data name="CannotApplySteamFixTitle" xml:space="preserve">
-    <value>Could not apply the Steam fix</value>
+  <data name="CompatibilityFixErrorTitle" xml:space="preserve">
+    <value>Could not apply compatibility fix</value>
   </data>
   <data name="SporeModLoaderDetected" xml:space="preserve">
-    <value>SporeModLoader has been detected, running the Launcher Kit alongside SporeModLoader is unsupported.
+    <value>SporeModLoader has been detected. Running the Launcher Kit alongside SporeModLoader is unsupported.
 
 You have the the following options:
 - Remove SporeModLoader to use the Launcher Kit by removing $PATH$
-- Use SporeModLoader instead of the Launcher Kit
-</value>
+- Use SporeModLoader instead of the Launcher Kit</value>
   </data>
   <data name="SporeModLoaderDetectedTitle" xml:space="preserve">
     <value>SporeModLoader detected</value>
   </data>
   <data name="UnsupportedSporeVersion" xml:space="preserve">
-    <value>Your current Spore game version is not compatible with this Launcher Kit version. If you downloaded the game from EA App, Steam, or GOG, please update to version 3.1.0.29 to proceed. If you're using a higher version of Spore, please see https://launcherkit.sporecommunity.com/support.</value>
+    <value>Your current Spore game version is not compatible with this Launcher Kit version.
+
+Both Spore and Spore Galactic Adventures must be installed from disc, EA App, Steam, or GOG.
+
+If you downloaded the game from EA App, Steam, or GOG, please ensure the game is up-to-date.
+
+Please see https://launcherkit.sporecommunity.com/support for further help.</value>
   </data>
   <data name="UnsupportedSporeVersionTitle" xml:space="preserve">
     <value>Unsupported Spore version</value>
+  </data>
+  <data name="RunAsAdminWarning" xml:space="preserve">
+    <value>Running the Spore ModAPI Launcher as Administrator (by right-clicking and selecting "Run as Administrator") is not recommended.
+
+This can be a security risk and can also cause problems with game functionality. You may be unable to load creations into Spore by dragging their PNGs into the game window.
+
+Are you sure you want to continue?</value>
+  </data>
+  <data name="LauncherError" xml:space="preserve">
+    <value>Spore ModAPI Launcher Error</value>
+  </data>
+  <data name="CompatibilityFixErrorEA" xml:space="preserve">
+    <value>The Launcher Kit could not apply an EA App compatibility fix. Please try the following:
+- Ensure you have a stable internet connection
+ - Right click the Spore ModAPI Launcher and "Run as Administrator" once, to allow the fix to be applied, then exit the game and run it normally</value>
+  </data>
+  <data name="LAAUnsupported" xml:space="preserve">
+    <value>Your current game version is not compatible with the LAA/4GB patch. The game may not launch.
+
+You can do one of the following:
+- Downgrade to a game version that is compatible with the LAA/4GB patch
+- Remove the LAA/4GB patch using the same tool used to apply it
+- Remove the LAA/4GB patch by verifying the game files for Spore Galactic Adventures
+
+The LAA/4GB patch is not required to use mods, but may help improve game stability.
+
+Please see https://launcherkit.sporecommunity.com/support for further help.</value>
+  </data>
+  <data name="LAAUnsupportedTitle" xml:space="preserve">
+    <value>LAA/4GB Patch Incompatible</value>
   </data>
 </root>
