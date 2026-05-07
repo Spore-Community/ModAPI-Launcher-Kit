@@ -106,30 +106,76 @@ namespace ModAPI.Common
         }
 
         /// <summary>
+        /// Returns true if the game is installed such that all data folders share the same parent folder.
+        /// Usually this doesn't matter, but as of early 2026, Steam may install multiple copies of the game due to differing app IDs. This can result in mods being installed to the wrong copy, so this function checks if this is the case.
+        /// </summary>
+        private static bool IsDataDirsSameParent()
+        {
+            // Get the data paths
+            var sporeDataPath = GetDataPath(Game.Spore);
+            var ccDataPath = GetDataPath(Game.CreepyAndCute); // null if not installed
+            var gaDataPath = GetDataPath(Game.GalacticAdventures);
+
+            // Get parent folder of each data path
+            var sporeParent = sporeDataPath != null ? Directory.GetParent(sporeDataPath).FullName : null;
+            var ccParent = ccDataPath != null ? Directory.GetParent(ccDataPath).FullName : null;
+            var gaParent = gaDataPath != null ? Directory.GetParent(gaDataPath).FullName : null;
+
+            // Make sure Spore and GA share the same parent folder
+            if (sporeParent != gaParent)
+            {
+                return false;
+            }
+
+            // If CC is installed, it should also share the same parent
+            if (ccParent != null && sporeParent != ccParent)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Returns true if Spore and GA are properly installed.
         /// If either game is not properly installed, returns false, and optionally shows an error message to the user. If the game is installed from Steam but hasn't been launched to complete the installation, shows a specific error message about launching the game on Steam.
         /// </summary>
         /// <returns></returns>
         public static bool IsGameInstalled(bool showMessageWhenFalse)
         {
-            if (IsInstalled(Game.Spore) && IsInstalled(Game.GalacticAdventures))
+            // Make sure data dirs are present for Spore and GA
+            if (!IsInstalled(Game.Spore) || !IsInstalled(Game.GalacticAdventures))
             {
-                return true;
+                if (showMessageWhenFalse)
+                {
+                    // Steam doesn't run the install script to create the registry keys until the game is launched from Steam for the first time
+                    if (SporeIsInstalledOnSteam())
+                    {
+                        SupportInfo.ShowInfo(CommonStrings.SteamDownloadedButNotLaunched, CommonStrings.SteamDownloadedButNotLaunchedTitle, true, false);
+                    }
+                    else
+                    {
+                        SupportInfo.ShowError(CommonStrings.GameNotFound, CommonStrings.GameNotFoundTitle, false, false);
+                    }
+                }
+                return false;
             }
 
-            if (showMessageWhenFalse)
+            // For Steam only, check that all data dirs are in the same parent folder
+            // As of early 2026, Steam may install multiple copies of the game due to differing app IDs. This can result in mods being installed to the wrong copy.
+            // The "current" copy (Spore vs C&C vs GA) used is the most recent one launched from Steam. If we detect mixed folders, it means that non-GA has been launched, and the user should be told to launch GA to force everything to use GA's copy of the data.
+            // Prior to early 2026, Steam only installed one copy, and they were all in the same folder, so this check will still pass.
+            // NOTE: This may need to be changed in the future, if Steam changes anything again.
+            if (SporeIsInstalledOnSteam() && !IsDataDirsSameParent())
             {
-                // Steam doesn't run the install script to create the registry keys until the game is launched from Steam for the first time
-                if (SporeIsInstalledOnSteam())
+                if (showMessageWhenFalse)
                 {
-                    SupportInfo.ShowInfo(CommonStrings.SteamDownloadedButNotLaunched, CommonStrings.SteamDownloadedButNotLaunchedTitle, true, false);
+                    SupportInfo.ShowWarning(CommonStrings.SteamDownloadedButNotLaunched, CommonStrings.SteamDownloadedButNotLaunchedTitle);
                 }
-                else
-                {
-                    SupportInfo.ShowError(CommonStrings.GameNotFound, CommonStrings.GameNotFoundTitle, false, false);
-                }
+                return false;
             }
-            return false;
+
+            return true;
         }
 
         /// <summary>
