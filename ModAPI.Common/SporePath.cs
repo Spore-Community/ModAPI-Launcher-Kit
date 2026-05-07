@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System.IO;
-using System.Windows;
 
 namespace ModAPI.Common
 {
@@ -19,6 +18,8 @@ namespace ModAPI.Common
         public static readonly string SteamAppsKey = @"HKEY_CURRENT_USER\Software\Valve\Steam\Apps\";
         public static readonly string GalacticAdventuresSteamID = "24720";
 
+        private static string _sporebinEP1Path = null;
+
         /// <summary>
         /// Gets the path to the SporebinEP1 folder that contains SporeApp.exe for Galactic Adventures.
         /// The path will NOT have a trailing slash.
@@ -26,6 +27,12 @@ namespace ModAPI.Common
         /// </summary>
         public static string GetSporebinEP1Path()
         {
+            // Cache the result to avoid repeated filesystem lookups
+            if (_sporebinEP1Path != null)
+            {
+                return _sporebinEP1Path;
+            }
+
             // Use GA's data path as a starting point, as SporebinEP1 is always next to whatever GA's data dir is
             var dataPath = GetDataPath(Game.GalacticAdventures);
             if (dataPath == null)
@@ -33,7 +40,7 @@ namespace ModAPI.Common
                 return null;
             }
 
-            var gameRootPath = Directory.GetParent(dataPath).ToString();
+            var gameRootPath = Directory.GetParent(dataPath).FullName;
             var binPath = Path.Combine(gameRootPath, "SporebinEP1");
 
             // Verify that this folder actually contains SporeApp.exe
@@ -42,7 +49,7 @@ namespace ModAPI.Common
                 return null;
             }
 
-            return binPath;
+            return _sporebinEP1Path = binPath;
         }
 
         /// <summary>
