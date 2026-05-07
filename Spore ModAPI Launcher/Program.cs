@@ -99,7 +99,7 @@ namespace SporeModAPI_Launcher
                         if (fileVersionInfo.InternalName == originalFileName ||
                             fileVersionInfo.OriginalFilename == originalFileName)
                         {
-                            SupportInfo.ShowWarning(Strings.SporeModLoaderDetected.Replace("$PATH$", sporeModLoaderPath), Strings.SporeModLoaderDetectedTitle);
+                            SupportInfo.ShowError(Strings.SporeModLoaderDetected.Replace("$PATH$", sporeModLoaderPath), Strings.SporeModLoaderDetectedTitle);
                             return;
                         }
                     }
