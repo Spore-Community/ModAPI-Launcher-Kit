@@ -400,6 +400,7 @@ namespace Spore_ModAPI_Easy_Installer
                     if (modCoreDllsVersion != null && modCoreDllsVersion > UpdateManager.CurrentDllsBuild)
                     {
                         SupportInfo.ShowWarning(Strings.OutdatedDllVersion.Replace("$MODNAME$", modName).Replace("$REQUIREDVERSION$", modCoreDllsVersion.ToString()), Strings.OutdatedDllVersionTitle, false, false);
+                        UpdateManager.ResetLastUpdateCheckTime();
                         return ResultType.ModNotInstalled;
                     }
                     // If the version is not specified, continue installing (the value is optional because not all mods use the ModAPI SDK)

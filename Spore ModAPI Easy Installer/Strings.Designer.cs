@@ -133,7 +133,7 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help..
+        ///   Looks up a localized string similar to &quot;$MODNAME$&quot; cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help..
         /// </summary>
         internal static string InvalidDllVersion {
             get {
@@ -178,7 +178,7 @@ namespace Spore_ModAPI_Easy_Installer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
+        ///   Looks up a localized string similar to &quot;$MODNAME$&quot; cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
         ///
         ///Required ModAPI DLLs version: $REQUIREDVERSION$ or higher.
         /// </summary>

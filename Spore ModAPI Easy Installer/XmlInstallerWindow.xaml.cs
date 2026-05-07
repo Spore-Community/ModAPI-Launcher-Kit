@@ -198,7 +198,10 @@ namespace Spore_ModAPI_Easy_Installer
                         if ((Document.SelectSingleNode("/mod").Attributes["dllsBuild"] != null) && (Version.TryParse(Document.SelectSingleNode("/mod").Attributes["dllsBuild"].Value + ".0", out Version minFeaturesLevel)))
                         {
                             if (minFeaturesLevel > UpdateManager.CurrentDllsBuild)
+                            {
+                                UpdateManager.ResetLastUpdateCheckTime();
                                 CyclePage(0, 2);
+                            }
                         }
                         else
                             throw new Exception("This Mod has not specified a valid minimum features level. Please inform the mod's developer of this.");
@@ -283,6 +286,7 @@ namespace Spore_ModAPI_Easy_Installer
                 }
                 else
                 {
+                    UpdateManager.ResetLastUpdateCheckTime();
                     CyclePage(0, 2);
                 }
             }
