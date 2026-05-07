@@ -96,8 +96,15 @@ namespace ModAPI.Common
                     return "Game not found";
                 }
 
-                var sporeAppPath = Path.Combine(SporePath.GetSporebinEP1Path(), "SporeApp.exe");
-                var laaString = LAAUtils.IsLAA(sporeAppPath) ? ", LAA" : "";
+                // Check if LAA
+                var laaString = "";
+                var versionType = GameVersion.DetectVersion(Path.Combine(SporePath.GetSporebinEP1Path(), "SporeApp.exe"));
+                var exeName = GameVersion.GetExecutableFileName(versionType);
+                if (exeName != null)
+                {
+                    var sporeAppPath = Path.Combine(SporePath.GetSporebinEP1Path(), exeName);
+                    laaString = LAAUtils.IsLAA(sporeAppPath) ? ", LAA" : "";
+                }
 
                 return $"{GameVersionString} - {GameVersionTypeString}{laaString}";
             }
