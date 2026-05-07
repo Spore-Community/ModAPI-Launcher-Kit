@@ -34,7 +34,7 @@ namespace ModAPI.Common
         /// By default, this is "%programdata%\Spore ModAPI Launcher Kit".
         /// The path will NOT have a trailing slash.
         /// </summary>
-        public static String LauncherKitPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static string LauncherKitPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
 
 
@@ -120,7 +120,7 @@ namespace ModAPI.Common
             }
 
             // Append LK info
-            message += $"\nLauncher Kit version: {LauncherKitVersionString}\nModAPI DLLs Version: {ModAPIDllsVersionString}";
+            message += $"\nLauncher Kit version: {LauncherKitVersionString}\nModAPI DLLs version: {ModAPIDllsVersionString}";
             if (showPaths)
             {
                 message += $"\nLauncher Kit path: {LauncherKitPath}";
@@ -154,6 +154,29 @@ namespace ModAPI.Common
         public static DialogResult ShowError(string message, string title, bool showGameInfo = true, bool showPaths = true, MessageBoxButtons buttons = MessageBoxButtons.OK)
         {
             return ShowMessageBox(message, title, showGameInfo, showPaths, buttons, MessageBoxIcon.Error);
+        }
+
+
+
+        /// <summary>
+        /// Writes a text file containing support information.
+        /// This includes the game version, game paths, Launcher Kit version, ModAPI DLLs version, and Launcher Kit path.
+        /// </summary>
+        public static void WriteSupportInfoFile(string path)
+        {
+            string[] text =
+            {
+                $"Spore version: {GameFullVersionInfoString}",
+                $"Spore path: {SporePath.GetSporebinEP1Path()}",
+                $"Spore Core data path: {SporePath.GetDataPath(SporePath.Game.Spore)}",
+                $"Spore C&C data path: {SporePath.GetDataPath(SporePath.Game.CreepyAndCute)}",
+                $"Spore GA data path: {SporePath.GetDataPath(SporePath.Game.GalacticAdventures)}",
+                $"Launcher Kit version: {LauncherKitVersionString}",
+                $"ModAPI DLLs version: {ModAPIDllsVersionString}",
+                $"Launcher Kit path: {LauncherKitPath}",
+            };
+
+            File.WriteAllLines(path, text);
         }
 
     }

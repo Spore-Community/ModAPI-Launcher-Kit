@@ -177,6 +177,28 @@ namespace ModAPI.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Launcher Kit has been configured to skip checking for updates. You may be missing new features and bug fixes, and may be unable to use newer mods.
+        ///
+        ///Outdated versions of the Launcher Kit are unsupported. If you cannot use automatic updates, for example, because this computer does not have an internet connection, please periodically check https://launcherkit.sporecommunity.com for the latest updates.
+        ///
+        ///Would you like to automatically check for updates?.
+        /// </summary>
+        public static string UpdateCheckDisabledNotice {
+            get {
+                return ResourceManager.GetString("UpdateCheckDisabledNotice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launcher Kit Updates Disabled.
+        /// </summary>
+        public static string UpdateCheckDisabledNoticeTitle {
+            get {
+                return ResourceManager.GetString("UpdateCheckDisabledNoticeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Launcher Kit could not connect to the update service. Try again in a few minutes, or check https://launcherkit.sporecommunity.com/support for help..
         /// </summary>
         public static string UpdateCheckFailed {
@@ -191,6 +213,15 @@ namespace ModAPI.Common {
         public static string UpdateCheckFailedTitle {
             get {
                 return ResourceManager.GetString("UpdateCheckFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Launcher Kit must be updated manually. Please visit https://launcherkit.sporecommunity.com/support for more information..
+        /// </summary>
+        public static string UpdateUnrecognized {
+            get {
+                return ResourceManager.GetString("UpdateUnrecognized", resourceCulture);
             }
         }
         

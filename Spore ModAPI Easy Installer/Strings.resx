@@ -157,12 +157,12 @@
     <value>Installation completed</value>
   </data>
   <data name="OutdatedDllVersion" xml:space="preserve">
-    <value> cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
+    <value>"$MODNAME$" cannot be installed, because it requires a newer version of the ModAPI DLLs. Please restart the launcher and allow it to update.
 
 Required ModAPI DLLs version: $REQUIREDVERSION$ or higher</value>
   </data>
   <data name="InvalidDllVersion" xml:space="preserve">
-    <value> cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help.</value>
+    <value>"$MODNAME$" cannot be installed, because it specifies an invalid version of the ModAPI DLLs. Please ask the mod developer for help.</value>
   </data>
   <data name="UnauthorizedAccess" xml:space="preserve">
     <value>The Easy Installer does not currently have permission to install or change mods. You may need to right-click the Easy Installer and "Run as Administrator".</value>

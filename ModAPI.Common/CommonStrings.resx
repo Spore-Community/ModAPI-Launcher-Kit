@@ -167,11 +167,24 @@ If you continue to get this message, or the game is not installed from Steam, th
   <data name="SteamDownloadedButNotLaunchedTitle" xml:space="preserve">
     <value>Steam installation not completed</value>
   </data>
+  <data name="UpdateCheckDisabledNotice" xml:space="preserve">
+    <value>The Launcher Kit has been configured to skip checking for updates. You may be missing new features and bug fixes, and may be unable to use newer mods.
+
+Outdated versions of the Launcher Kit are unsupported. If you cannot use automatic updates, for example, because this computer does not have an internet connection, please periodically check https://launcherkit.sporecommunity.com for the latest updates.
+
+Would you like to automatically check for updates?</value>
+  </data>
+  <data name="UpdateCheckDisabledNoticeTitle" xml:space="preserve">
+    <value>Launcher Kit Updates Disabled</value>
+  </data>
   <data name="UpdateCheckFailed" xml:space="preserve">
     <value>The Launcher Kit could not connect to the update service. Try again in a few minutes, or check https://launcherkit.sporecommunity.com/support for help.</value>
   </data>
   <data name="UpdateCheckFailedTitle" xml:space="preserve">
     <value>Launcher Kit Update</value>
+  </data>
+  <data name="UpdateUnrecognized" xml:space="preserve">
+    <value>The Launcher Kit must be updated manually. Please visit https://launcherkit.sporecommunity.com/support for more information.</value>
   </data>
   <data name="UpdatingDllsDialog" xml:space="preserve">
     <value>ModAPI DLLs are updating to version </value>

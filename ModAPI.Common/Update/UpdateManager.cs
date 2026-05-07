@@ -47,28 +47,34 @@ namespace ModAPI.Common.Update
                 if (versions.Count() > 0)
                 {
                     Version minVer = versions.Min();
-                    return new Version(minVer.Major, minVer.Minor, minVer.Build, 0);
+                    return new Version(minVer.Major, minVer.Minor, minVer.Build, 0); // revision must be 0 for update checking purposes, as we use revision to indicate whether the DLL is for disc/download/combined versions
                 }
                 else
                     return new Version(999, 999, 999, 999);
             }
         }
+        public static bool IsUpdateCheckDisabled => File.Exists(UpdaterBlockPath);
 
         public static void CheckForUpdates()
         {
+            // Create appdata folder if it doesn't exist
+            Directory.CreateDirectory(AppDataPath);
+
+            // Write support info file to appdata folder
+            SupportInfo.WriteSupportInfoFile(Path.Combine(AppDataPath, "support.info"));
+
+            // Make sure game is not running before running any Launcher Kit apps
             if ((Process.GetProcessesByName("SporeApp").Length > 0) || (Process.GetProcessesByName("SporeApp_ModAPIFix").Length > 0))
             {
                 SupportInfo.ShowWarning(CommonStrings.GameAlreadyRunning, CommonStrings.GameAlreadyRunningTitle, true, false);
                 Process.GetCurrentProcess().Kill();
             }
 
-            if (!Directory.Exists(AppDataPath))
-                Directory.CreateDirectory(AppDataPath);
-
-            File.WriteAllText(Path.Combine(AppDataPath, "path.info"), Directory.GetParent(Assembly.GetEntryAssembly().Location).ToString());
-
+            // Delete old updater exe if present
             if (File.Exists(UpdaterDestPath))
+            {
                 File.Delete(UpdaterDestPath);
+            }
 
             if (File.Exists(LastUpdateCheckTimePath))
             {
@@ -79,20 +85,35 @@ namespace ModAPI.Common.Update
                                                                         LastUpdateDateTimeFormat,
                                                                         CultureInfo.InvariantCulture);
 
+                    // If it's been less than an hour since last update check, don't check again
                     if ((DateTime.Now - lastUpdateCheckDateTime).TotalHours < 1)
                     {
                         return;
                     }
+
+                    // If update check is disabled, and it's been more than 30 days since last update check, prompt user to check for updates
+                    if (IsUpdateCheckDisabled && (DateTime.Now - lastUpdateCheckDateTime).TotalDays >= 30)
+                    {
+                        PromptUserUnblockUpdates();
+                    }
                 }
                 catch (Exception)
                 {
-                    File.Delete(LastUpdateCheckTimePath);
+                    ResetLastUpdateCheckTime();
                 }
             }
-
-            if (File.Exists(UpdaterBlockPath))
+            else if (IsUpdateCheckDisabled)
             {
-                // don't check for updates when block file exists
+                // If update check is disabled, and this is a new install or we force checked for updates, prompt user to check for updates
+                PromptUserUnblockUpdates();
+            }
+
+            // Record current time as last update check time
+            File.WriteAllText(LastUpdateCheckTimePath, DateTime.Now.ToString(LastUpdateDateTimeFormat));
+
+            // Don't check for updates when block file exists
+            if (IsUpdateCheckDisabled)
+            {
                 return;
             }
 
@@ -254,8 +275,6 @@ namespace ModAPI.Common.Update
                         dialog.ShowDialog();
                     }
                 }
-
-                File.WriteAllText(LastUpdateCheckTimePath, DateTime.Now.ToString(LastUpdateDateTimeFormat));
             }
             catch (Exception ex)
             {
@@ -288,7 +307,31 @@ namespace ModAPI.Common.Update
 
         static void ShowUnrecognizedUpdateInfoVersionMessage()
         {
-            SupportInfo.ShowInfo("This update to the Spore ModAPI Launcher Kit must be downloaded manually. Please visit https://launcherkit.sporecommunity.com/support for more information.", CommonStrings.UpdateCheckFailedTitle, false, true);
+            SupportInfo.ShowInfo(CommonStrings.UpdateUnrecognized, CommonStrings.UpdateCheckFailedTitle, false, true);
         }
+
+        /// <summary>
+        /// Forces the Launcher Kit to check for updates the next time it is run, skipping the one hour timeout.
+        /// If updates are blocked, this will also prompt the user to unblock updates on next launch.
+        /// </summary>
+        public static void ResetLastUpdateCheckTime()
+        {
+            File.Delete(LastUpdateCheckTimePath);
+        }
+
+        /// <summary>
+        /// Warns the user that update checks are disabled, and prompts them to re-enable.
+        /// Returns Yes or No depending on whether the user wants to re-enable update checks. If Yes, the update block file is removed.
+        /// </summary>
+        static DialogResult PromptUserUnblockUpdates()
+        {
+            var result = SupportInfo.ShowInfo(CommonStrings.UpdateCheckDisabledNotice, CommonStrings.UpdateCheckDisabledNoticeTitle, false, false, MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                File.Delete(UpdaterBlockPath);
+            }
+            return result;
+        }
+
     }
 }
