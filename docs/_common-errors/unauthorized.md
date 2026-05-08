@@ -1,7 +1,7 @@
 ---
 title: Unauthorized access exception
 ---
-This error will show
+This error is known to occur when Spore is installed from EA App, and will show
 ```
 System.UnauthorizedAccessException
 Access to the path '<path>' is denied.
