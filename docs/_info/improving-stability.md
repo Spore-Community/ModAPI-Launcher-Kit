@@ -13,12 +13,14 @@ This mod fixes crashes that occur in several *specific* scenarios, such as when 
 
 ---
 
-## 4GB Patch (Large Address Aware)
-Spore is an older game and is not optimized to take full advantage of modern computers. This external tool patches the game to use more memory, doubling from the historical Windows default of 2GB, to 4GB (internally known as being "large address aware"). This can reduce crashes that occur if the game exceeds the normal Windows memory limitations.
+## LAA/4GB Patch (Large Address Aware)
+Spore is an older game and is not optimized to take full advantage of modern computers. This external tool patches the game to use more memory, doubling from the historical Windows default of 2GB, to 4GB (internally known as being "large address aware" or "LAA" for short). This can reduce crashes that occur if the game exceeds the normal Windows memory limitations.
 
-This is not a Spore-specific patch and should not be confused with official Spore patches, such as patch 1.5.1.
+This is not a Spore-specific patch and should not be confused with official Spore patches, such as patch 5.1.
 
 [Download 4GB Patch]({{ page.4gb_patch_url }})
+
+When correctly applied, the Easy Uninstaller will show "LAA" after the game version in the bottom left corner.
 
 #### Disc and GOG
 Apply the 4GB patch to `SporeApp.exe` in the `SporebinEP1` folder.

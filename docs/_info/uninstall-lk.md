@@ -19,7 +19,9 @@ Do not uninstall the Launcher Kit unless no mods are listed in the Easy Uninstal
 ## Finding and removing Launcher Kit
 You will need to know where the Launcher Kit is installed to. By default, this is `%programdata%\Spore ModAPI Launcher Kit`, but you may have changed it during installation.
 
-If you cannot find the Launcher Kit files, press Win+R and type in `notepad "%appdata%\Spore ModAPI Launcher\path.info"`. A notepad window will open, containing the location of the Launcher Kit files.
+If you cannot find the Launcher Kit files, press Win+R and type in `notepad "%appdata%\Spore ModAPI Launcher\support.info"`. A notepad window will open, containing the location of the Launcher Kit files.
+
+*Note: For older Launcher Kit versions, you may need to use `notepad "%appdata%\Spore ModAPI Launcher\path.info"` instead.*
 
 Once located, you can simply delete the `Spore ModAPI Launcher Kit` folder.
 

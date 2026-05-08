@@ -16,10 +16,17 @@ description: Get help with Spore mods. Please read the suggested steps on this p
 If you have tried all of the above and still need help, please prepare the following information:
 - Where you got the game from (disc, EA App, Steam, or GOG)
 - Screenshot of the error message (if applicable) and/or a description of what is not working
-- Screenshot(s) of the Easy Uninstaller, specifically showing both
+- Screenshot(s) of the Easy Uninstaller, specifically showing all of the following:
   - Your current mod list
+  - Your current game version
   - Your current Launcher Kit version
+  - Your current ModAPI DLLs version
 
 Press Alt+PrtScr to copy a screenshot, then you can paste it directly into Discord or GitHub.
 
-Submit the above information in the #mod-support channel of the [Spore Modding Community Discord]({{ page.smc_discord_url }}) (recommended), or, create an issue on [GitHub](https://github.com/Spore-Community/ModAPI-Launcher-Kit/issues/new/choose) and submit it there. We do not provide support via email or DMs.
+You may also be asked to send a support info file:
+- Press Win+R and type in `notepad "%appdata%\Spore ModAPI Launcher\support.info"`
+- A notepad window will open, copy and send the full contents of this file.
+- If you get a prompt "Cannot find the file", make sure the Launcher Kit is up-to-date.
+
+Submit the above information in the #mod-support channel of the [Spore Modding Community Discord]({{ page.smc_discord_url }}) (recommended), or, create an issue on [GitHub](https://github.com/Spore-Community/ModAPI-Launcher-Kit/issues/new/choose) and submit it there. We do not provide technical support via email or DMs.

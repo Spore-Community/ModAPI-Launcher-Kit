@@ -12,7 +12,9 @@ Any other game version that is not listed here is not supported for modding.
 *Note: To use Spore's online features, you must have the latest game version (3.1.0.29), OR the [SporeFixOnline mod]({{ page.fixonline_mod_url }}).*
 
 ### Checking your game version
-Open the folder where Spore Galactic Adventures is installed and open the `SporebinEP1` folder. Hover over `SporeApp` to see the game version.
+If the Launcher Kit is installed, open the Easy Uninstaller. The game version is shown in the bottom left corner.
+
+Alternatively, open the folder where Spore Galactic Adventures is installed and open the `SporebinEP1` folder. Hover over `SporeApp` to see the game version.
 
 ### Do not install multiple copies of the game
 Installing multiple copies of the game is known to cause a variety of problems. For example, do not install the game from EA App if you already have it installed from Steam or GOG. 
