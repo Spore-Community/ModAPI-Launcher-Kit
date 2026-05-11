@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace ModAPI.Common
@@ -52,8 +53,11 @@ namespace ModAPI.Common
 
         public string Name;
         public string Unique;
+        public Version Version;
         public string DisplayName;
         public string ConfiguratorPath;
+        public string[] Dependencies;
+        public Version[] DependenciesVersions;
         public List<InstalledFile> InstalledFiles = new List<InstalledFile>();
 
         public ModConfiguration(string name, string unique)
@@ -98,6 +102,27 @@ namespace ModAPI.Common
             element.Attributes.Append(uniqueAttribute);
             //}
 
+            if (Version != null)
+            {
+                var versionAttribute = document.CreateAttribute("version");
+                versionAttribute.Value = Version.ToString();
+                element.Attributes.Append(versionAttribute);
+            }
+
+            if (Dependencies != null && Dependencies.Length > 0)
+            {
+                var dependenciesAttribute = document.CreateAttribute("dependencies");
+                dependenciesAttribute.Value = String.Join("?", Dependencies);
+                element.Attributes.Append(dependenciesAttribute);
+            }
+
+            if (DependenciesVersions != null && DependenciesVersions.Length > 0)
+            {
+                var dependenciesVersionsAttribute = document.CreateAttribute("dependenciesVersions");
+                dependenciesVersionsAttribute.Value = String.Join("?", DependenciesVersions.Select(x => x.ToString()));
+                element.Attributes.Append(dependenciesVersionsAttribute);
+            }
+
             if (this.ConfiguratorPath != null)
             {
                 attribute = document.CreateAttribute("configurator");
@@ -131,6 +156,46 @@ namespace ModAPI.Common
                 Unique = uniqueAttribute.Value;
             else
                 Unique = nameAttribute.Value;
+
+            var versionAttribute = node.Attributes.GetNamedItem("version");
+            if (versionAttribute != null &&
+                Version.TryParse(versionAttribute.Value, out Version parsedVersion))
+            {
+                Version = parsedVersion;
+            }
+            else
+            {
+                Version = null;
+            }
+
+            var dependenciesAttribute = node.Attributes.GetNamedItem("dependencies");
+            if (dependenciesAttribute != null)
+            {
+                Dependencies = dependenciesAttribute.Value.Split('?');
+            }
+
+            var dependenciesVersionsAttribute = node.Attributes.GetNamedItem("dependenciesVersions");
+            if (dependenciesVersionsAttribute != null)
+            {
+                List<Version> versions = new List<Version>();
+                foreach (string version in dependenciesVersionsAttribute.Value.Split('?'))
+                {
+                    if (Version.TryParse(version, out Version parsedDependencyVersion))
+                    {
+                        versions.Add(parsedDependencyVersion);
+                    }
+                    else
+                    {
+                        versions.Clear();
+                        break;
+                    }
+                }
+
+                if (versions.Count() != 0)
+                {
+                    DependenciesVersions = versions.ToArray();
+                }
+            }
 
             var displayNameAttribute = node.Attributes.GetNamedItem("displayName");
             if (displayNameAttribute != null)
