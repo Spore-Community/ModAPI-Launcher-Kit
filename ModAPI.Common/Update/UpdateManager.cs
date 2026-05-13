@@ -60,8 +60,16 @@ namespace ModAPI.Common.Update
             // Create appdata folder if it doesn't exist
             Directory.CreateDirectory(AppDataPath);
 
-            // Write support info file to appdata folder
-            SupportInfo.WriteSupportInfoFile(Path.Combine(AppDataPath, "support.info"));
+            // Try to write support info file to appdata folder
+            try
+            {
+                SupportInfo.WriteSupportInfoFile(Path.Combine(AppDataPath, "support.info"));
+            }
+            catch (Exception ex)
+            {
+                SupportInfo.ShowError(CommonStrings.SupportInfoWriteFailed + "\n\n" + ex.ToString(), CommonStrings.UpdateCheckFailedTitle, false, true);
+                return;
+            }
 
             // Make sure game is not running before running any Launcher Kit apps
             if ((Process.GetProcessesByName("SporeApp").Length > 0) || (Process.GetProcessesByName("SporeApp_ModAPIFix").Length > 0))

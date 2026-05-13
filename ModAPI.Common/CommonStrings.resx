@@ -167,6 +167,9 @@ If you continue to get this message, or the game is not installed from Steam, th
   <data name="SteamDownloadedButNotLaunchedTitle" xml:space="preserve">
     <value>Steam installation not completed</value>
   </data>
+  <data name="SupportInfoWriteFailed" xml:space="preserve">
+    <value>The Launcher Kit failed to write the support information to your disk</value>
+  </data>
   <data name="UpdateCheckDisabledNotice" xml:space="preserve">
     <value>The Launcher Kit has been configured to skip checking for updates. You may be missing new features and bug fixes, and may be unable to use newer mods.
 
