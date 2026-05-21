@@ -137,7 +137,7 @@ namespace ModAPI.Common {
         ///   Looks up a localized string similar to An update to the Spore ModAPI Launcher Kit is now available. Would you like to install it now?
         ///
         ///Current Launcher Kit version: $CURRENTLK$
-        ///New Launcher Kit version: $NEWLKS$.
+        ///New Launcher Kit version: $NEWLK$.
         /// </summary>
         public static string LKUpdateAvailable {
             get {
