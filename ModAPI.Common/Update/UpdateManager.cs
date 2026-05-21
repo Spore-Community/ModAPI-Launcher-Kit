@@ -57,67 +57,68 @@ namespace ModAPI.Common.Update
 
         public static void CheckForUpdates()
         {
-            // Create appdata folder if it doesn't exist
-            Directory.CreateDirectory(AppDataPath);
-
-            // Try to write support info file to appdata folder
+            // Wrap in try-catch in case an exception occurs while reading or writing any files/folders
             try
             {
+                // Create appdata folder if it doesn't exist
+                Directory.CreateDirectory(AppDataPath);
+
+                // Try to write support info file to appdata folder
                 SupportInfo.WriteSupportInfoFile(Path.Combine(AppDataPath, "support.info"));
+
+                // Make sure game is not running before running any Launcher Kit apps
+                if ((Process.GetProcessesByName("SporeApp").Length > 0) || (Process.GetProcessesByName("SporeApp_ModAPIFix").Length > 0))
+                {
+                    SupportInfo.ShowWarning(CommonStrings.GameAlreadyRunning, CommonStrings.GameAlreadyRunningTitle, true, false);
+                    Process.GetCurrentProcess().Kill();
+                }
+
+                // Delete old updater exe if present
+                if (File.Exists(UpdaterDestPath))
+                {
+                    File.Delete(UpdaterDestPath);
+                }
+
+                if (File.Exists(LastUpdateCheckTimePath))
+                {
+                    try
+                    {
+                        string lastUpdateCheckDateTimeString = File.ReadAllText(LastUpdateCheckTimePath);
+                        DateTime lastUpdateCheckDateTime = DateTime.ParseExact(lastUpdateCheckDateTimeString,
+                                                                            LastUpdateDateTimeFormat,
+                                                                            CultureInfo.InvariantCulture);
+
+                        // If it's been less than an hour since last update check, don't check again
+                        if ((DateTime.Now - lastUpdateCheckDateTime).TotalHours < 1)
+                        {
+                            return;
+                        }
+
+                        // If update check is disabled, and it's been more than 30 days since last update check, prompt user to check for updates
+                        if (IsUpdateCheckDisabled && (DateTime.Now - lastUpdateCheckDateTime).TotalDays >= 30)
+                        {
+                            PromptUserUnblockUpdates();
+                        }
+                    }
+                    catch (FormatException)
+                    {
+                        ResetLastUpdateCheckTime();
+                    }
+                }
+                else if (IsUpdateCheckDisabled)
+                {
+                    // If update check is disabled, and this is a new install or we force checked for updates, prompt user to check for updates
+                    PromptUserUnblockUpdates();
+                }
+
+                // Record current time as last update check time
+                File.WriteAllText(LastUpdateCheckTimePath, DateTime.Now.ToString(LastUpdateDateTimeFormat));
             }
             catch (Exception ex)
             {
-                SupportInfo.ShowError(CommonStrings.SupportInfoWriteFailed + "\n\n" + ex.ToString(), CommonStrings.UpdateCheckFailedTitle, false, true);
-                return;
+                // Just in case there's a problem with SupportInfo, use basic MessageBox
+                MessageBox.Show(CommonStrings.UpdatePreCheckFailed + "\n\n" + ex.ToString(), CommonStrings.UpdateCheckFailedTitle);
             }
-
-            // Make sure game is not running before running any Launcher Kit apps
-            if ((Process.GetProcessesByName("SporeApp").Length > 0) || (Process.GetProcessesByName("SporeApp_ModAPIFix").Length > 0))
-            {
-                SupportInfo.ShowWarning(CommonStrings.GameAlreadyRunning, CommonStrings.GameAlreadyRunningTitle, true, false);
-                Process.GetCurrentProcess().Kill();
-            }
-
-            // Delete old updater exe if present
-            if (File.Exists(UpdaterDestPath))
-            {
-                File.Delete(UpdaterDestPath);
-            }
-
-            if (File.Exists(LastUpdateCheckTimePath))
-            {
-                try
-                {
-                    string lastUpdateCheckDateTimeString = File.ReadAllText(LastUpdateCheckTimePath);
-                    DateTime lastUpdateCheckDateTime = DateTime.ParseExact(lastUpdateCheckDateTimeString,
-                                                                        LastUpdateDateTimeFormat,
-                                                                        CultureInfo.InvariantCulture);
-
-                    // If it's been less than an hour since last update check, don't check again
-                    if ((DateTime.Now - lastUpdateCheckDateTime).TotalHours < 1)
-                    {
-                        return;
-                    }
-
-                    // If update check is disabled, and it's been more than 30 days since last update check, prompt user to check for updates
-                    if (IsUpdateCheckDisabled && (DateTime.Now - lastUpdateCheckDateTime).TotalDays >= 30)
-                    {
-                        PromptUserUnblockUpdates();
-                    }
-                }
-                catch (Exception)
-                {
-                    ResetLastUpdateCheckTime();
-                }
-            }
-            else if (IsUpdateCheckDisabled)
-            {
-                // If update check is disabled, and this is a new install or we force checked for updates, prompt user to check for updates
-                PromptUserUnblockUpdates();
-            }
-
-            // Record current time as last update check time
-            File.WriteAllText(LastUpdateCheckTimePath, DateTime.Now.ToString(LastUpdateDateTimeFormat));
 
             // Don't check for updates when block file exists
             if (IsUpdateCheckDisabled)
@@ -324,7 +325,11 @@ namespace ModAPI.Common.Update
         /// </summary>
         public static void ResetLastUpdateCheckTime()
         {
-            File.Delete(LastUpdateCheckTimePath);
+            try
+            {
+                File.Delete(LastUpdateCheckTimePath);
+            }
+            catch { } // If the file can't be deleted, it probably can't be read, in which case we always do an update check anyway
         }
 
         /// <summary>
