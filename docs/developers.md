@@ -5,7 +5,7 @@ description: Learn about making Spore mods using the Spore ModAPI SDK and SporeM
 ## Learn about making mods
 - [Introduction to Spore modding (read this first)]({{ page.smfx_github_url }}/wiki/Introduction-to-Spore-modding)
 - [Creating your first mod]({{ page.smfx_github_url }}/wiki/Tutorial:-Creating-your-first-mod)
-- [ModAPI tutorials]({{ page.modapi_url }}/Spore-ModAPI/pages.html)
+- [ModAPI tutorials]({{ page.modapi_url }}/pages.html)
 
 ## Useful links
 - [Spore Modding Community Discord]({{ page.smc_discord_url }})
