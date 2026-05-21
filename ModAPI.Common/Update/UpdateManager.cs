@@ -207,7 +207,7 @@ namespace ModAPI.Common.Update
                             string currentLKVersion = SupportInfo.LauncherKitVersionString;
                             string newLKVersion = updateInfoLines[1];
 
-                            if (MessageBox.Show(CommonStrings.LKUpdateAvailable.Replace("$NEWLK", newLKVersion).Replace("$CURRENTLK", currentLKVersion), CommonStrings.LKUpdateAvailableTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            if (MessageBox.Show(CommonStrings.LKUpdateAvailable.Replace("$NEWLK$", newLKVersion).Replace("$CURRENTLK$", currentLKVersion), CommonStrings.LKUpdateAvailableTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
                                 if (bool.Parse(updateInfoLines[2]))
                                 {
@@ -268,7 +268,7 @@ namespace ModAPI.Common.Update
                     string newDllsVersion = githubRelease.tag_name;
                     string currentDllsVersion = SupportInfo.ModAPIDllsVersionString;
                     string currentLKVersion = SupportInfo.LauncherKitVersionString;
-                    var result = MessageBox.Show(CommonStrings.DllsUpdateAvailable.Replace("$NEWDLLS", newDllsVersion).Replace("$CURRENTDLLS", currentDllsVersion).Replace("$CURRENTLK$", currentLKVersion), CommonStrings.DllsUpdateAvailableTitle, MessageBoxButtons.YesNo);
+                    var result = MessageBox.Show(CommonStrings.DllsUpdateAvailable.Replace("$NEWDLLS$", newDllsVersion).Replace("$CURRENTDLLS$", currentDllsVersion).Replace("$CURRENTLK$", currentLKVersion), CommonStrings.DllsUpdateAvailableTitle, MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
                         var dialog = new ProgressDialog(
