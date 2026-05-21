@@ -62,7 +62,8 @@ namespace ModAPI.Updater
                             if (InstallProgressBar.Value < InstallProgressBar.Maximum)
                                 InstallProgressBar.Value++;
                         }
-                        string noUpdateFilePath = Path.Combine(path, "noUpdateCheck.info");
+                        string appDataPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Spore ModAPI Launcher");
+                        string noUpdateFilePath = Path.Combine(appDataPath, "noUpdateCheck.info");
                         if (File.Exists(noUpdateFilePath))
                             File.Delete(noUpdateFilePath);
 
@@ -144,12 +145,15 @@ namespace ModAPI.Updater
                         exeArgs += currentArg + " ";
                     }
                 }
-                    
+                
                 if (Permissions.IsAdministrator() && Path.GetFileName(pathArg).ToLowerInvariant().Contains("modapi launcher"))
                 {
-                    MessageBox.Show("Please note that in order to drag creation PNGs into the game window after an update to the Spore ModAPI Launcher Kit, you will have to exit Spore and run the ModAPI Launcher yourself.");
+                    MessageBox.Show("The Launcher Kit has been updated. Open the Spore ModAPI Launcher to launch the game.");
                 }
-                Process.Start(pathArg, exeArgs);
+                else
+                {
+                    Process.Start(pathArg, exeArgs);
+                }
             }
         }
     }
