@@ -62,7 +62,7 @@ namespace ModAPI.Updater
                             if (InstallProgressBar.Value < InstallProgressBar.Maximum)
                                 InstallProgressBar.Value++;
                         }
-                        string noUpdateFilePath = Path.Combine(path, "noUpdateCheck.info");
+                        string noUpdateFilePath = Environment.ExpandEnvironmentVariables(@"%appdata%\Spore ModAPI Launcher\noUpdateCheck.info");
                         if (File.Exists(noUpdateFilePath))
                             File.Delete(noUpdateFilePath);
 
