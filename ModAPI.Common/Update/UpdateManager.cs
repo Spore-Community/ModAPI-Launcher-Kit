@@ -66,6 +66,9 @@ namespace ModAPI.Common.Update
                 // Try to write support info file to appdata folder
                 SupportInfo.WriteSupportInfoFile(Path.Combine(AppDataPath, "support.info"));
 
+                // Write Launcher Kit path to path.info
+                File.WriteAllText(Path.Combine(AppDataPath, "path.info"), SupportInfo.LauncherKitPath);
+
                 // Make sure game is not running before running any Launcher Kit apps
                 if ((Process.GetProcessesByName("SporeApp").Length > 0) || (Process.GetProcessesByName("SporeApp_ModAPIFix").Length > 0))
                 {
