@@ -103,7 +103,10 @@ namespace ModAPI.Common
                 if (exeName != null)
                 {
                     var sporeAppPath = Path.Combine(SporePath.GetSporebinEP1Path(), exeName);
-                    laaString = LAAUtils.IsLAA(sporeAppPath) ? ", LAA" : "";
+                    if (File.Exists(sporeAppPath))
+                    {
+                        laaString = LAAUtils.IsLAA(sporeAppPath) ? ", LAA" : "";
+                    }
                 }
 
                 return $"{GameVersionString} - {GameVersionTypeString}{laaString}";
