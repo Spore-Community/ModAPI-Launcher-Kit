@@ -178,7 +178,7 @@ Are you sure you want to continue?</value>
   <data name="CompatibilityFixErrorEA" xml:space="preserve">
     <value>The Launcher Kit could not apply an EA App compatibility fix. Please try the following:
 - Ensure you have a stable internet connection
- - Right click the Spore ModAPI Launcher and "Run as Administrator" once, to allow the fix to be applied, then exit the game and run it normally</value>
+- Right click the Spore ModAPI Launcher and "Run as Administrator" once, to allow the fix to be applied, then exit the game and run it normally</value>
   </data>
   <data name="LAAUnsupported" xml:space="preserve">
     <value>Your current game version is not compatible with the LAA/4GB patch. The game may not launch.

@@ -81,7 +81,7 @@ namespace SporeModAPI_Launcher {
         /// <summary>
         ///   Looks up a localized string similar to The Launcher Kit could not apply an EA App compatibility fix. Please try the following:
         ///- Ensure you have a stable internet connection
-        /// - Right click the Spore ModAPI Launcher and &quot;Run as Administrator&quot; once, to allow the fix to be applied, then exit the game and run it normally.
+        ///- Right click the Spore ModAPI Launcher and &quot;Run as Administrator&quot; once, to allow the fix to be applied, then exit the game and run it normally.
         /// </summary>
         public static string CompatibilityFixErrorEA {
             get {
