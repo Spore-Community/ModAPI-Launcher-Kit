@@ -10,6 +10,7 @@ using System.IO;
 using ModAPI.Common;
 using ModAPI.Common.Types;
 using ModAPI.Common.Update;
+using System.Linq;
 
 namespace Spore_ModAPI_Easy_Uninstaller
 {
@@ -87,7 +88,7 @@ namespace Spore_ModAPI_Easy_Uninstaller
 
                 if (modDependencies.Count() > 0)
                 {
-                    MessageBox.Show($"Cannot uninstall {String.Join(", ", modDependencies.ToArray())} because {String.Join(", ", reliantMods.ToArray())} relies on them being installed!", CommonStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Cannot uninstall {String.Join(", ", modDependencies.ToArray())} because {String.Join(", ", reliantMods.ToArray())} relies on them being installed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
