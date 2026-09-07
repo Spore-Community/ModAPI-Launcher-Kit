@@ -222,6 +222,8 @@ namespace ModAPI.Common
         /// </summary>
         private static string[] GetRegistryKeySuffixes(Game game)
         {
+            // The registry paths will be checked in the order set here
+            // This is usually irrelevant, as we deter users from having multiple installs, but Steam tries to overwrite registry paths (silently "fixing" issues from multiple installs), so we list Steam paths first as to pretend like it's the only one installed
             switch (game)
             {
                 case Game.GalacticAdventures:
@@ -229,8 +231,8 @@ namespace ModAPI.Common
                 case Game.Spore:
                     return new[] { "Electronic Arts\\SPORE" };
                 case Game.CreepyAndCute:
-                    // Disc/Origin/EA use the former, Steam/GOG use the latter, game hardcodes both
-                    return new[] { "Electronic Arts\\SPORE(TM) Creepy & Cute Parts Pack", "Electronic Arts\\SPORE Creepy and Cute Parts Pack" };
+                    // Steam/GOG use the former, Disc/Origin/EA use the latter, game hardcodes both
+                    return new[] { "Electronic Arts\\SPORE Creepy and Cute Parts Pack", "Electronic Arts\\SPORE(TM) Creepy & Cute Parts Pack" };
                 default:
                     return new string[] { };
             }
