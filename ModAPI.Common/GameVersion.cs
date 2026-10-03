@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace ModAPI.Common
 {
@@ -22,13 +23,13 @@ namespace ModAPI.Common
 
     public static class GameVersion
     {
-        private static readonly int[] ExecutableSizes = {
-                                                    24909584, // Disc
-                                                    24898224, // Origin_March2017
-                                                    24906040, // EA_October2024
-                                                    24885248, // Steam_March2017
-                                                    24895536, // GoG_October2024
-                                                    25066744  // Steam_October2024
+        private static readonly Dictionary<long, GameVersionType> ExecutableSizes = new Dictionary<long, GameVersionType>() {
+                                                    { 24909584, GameVersionType.Disc },
+                                                    { 24898224, GameVersionType.Origin_March2017 },
+                                                    { 24906040, GameVersionType.EA_October2024 },
+                                                    { 24885248, GameVersionType.Steam_March2017 },
+                                                    { 24895536, GameVersionType.GOG_October2024 },
+                                                    { 25066744, GameVersionType.Steam_October2024 }
                                                 };
 
         public static bool RequiresModAPIFix(GameVersionType versionType)
@@ -43,12 +44,9 @@ namespace ModAPI.Common
             {
                 var length = new FileInfo(path).Length;
 
-                for (int i = 0; i < ExecutableSizes.Length; i++)
+                if (ExecutableSizes.TryGetValue(length, out GameVersionType gameVersionType))
                 {
-                    if (length == ExecutableSizes[i])
-                    {
-                        return (GameVersionType)i;
-                    }
+                    return gameVersionType;
                 }
             }
 
