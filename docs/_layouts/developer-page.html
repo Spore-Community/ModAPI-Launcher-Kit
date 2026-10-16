@@ -1,0 +1,33 @@
+---
+layout: default
+---
+<div class="support-page">
+    <!--<div id="side-nav">
+        
+        <h2>General Info</h2>
+        <ul id="info-pages">
+            {% for item in site.info %}
+            <li{% if page.url == item.url %} class="active"{% endif %}>
+                <a href="{{ item.url }}">{{ item.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <h2>Common Errors</h2>
+        <ul id="common-errors-pages">
+            {% for item in site.common-errors %}
+            <li{% if page.url == item.url %} class="active"{% endif %}>
+                <a href="{{ item.url }}">{{ item.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <!-- To add additional categories, copy one of the above sections, changing the heading and loop variable 
+    </div> -->
+    
+    <article>
+        <!-- These variables are replaced with the title and content of the support page -->
+        <h1>{{ page.title }}</h1>
+        {{ content }}
+    </article>
+</div>

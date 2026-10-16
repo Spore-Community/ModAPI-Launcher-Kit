@@ -22,7 +22,7 @@ description: Learn about making Spore mods using the Spore ModAPI SDK and SporeM
 - [Source code]({{ page.modapi_github_url }})
 
 ### Publishing mods
-- [XML Mod Identity (ModInfo.xml) documentation](https://davoonline.com/sporemodder/rob55rod/ModAPI/Public/xmlModIdentity_v1_0_1_1.html)
+- [XML Mod Identity (ModInfo.xml) documentation](/developers/modinfo)
 
 ---
 

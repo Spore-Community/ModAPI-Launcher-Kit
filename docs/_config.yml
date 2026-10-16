@@ -37,6 +37,11 @@ defaults:
       type: "common-errors"
     values:
       layout: "support-page"
+  # Use "developer-page.html" sidebar layout for common error pages
+  - scope:
+      type: "developers"
+    values:
+      layout: "developer-page"
 
 collections:
   # Add additional categories here
@@ -46,6 +51,9 @@ collections:
   common-errors:
     output: true
     permalink: /support/:name
+  developers:
+    output: true
+    permalink: /developers/:name
 
 # Prevents README files from being part of the actual website
 exclude: ["README.md", "**/README.md"]
