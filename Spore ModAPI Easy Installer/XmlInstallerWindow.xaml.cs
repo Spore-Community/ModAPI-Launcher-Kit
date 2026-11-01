@@ -484,27 +484,15 @@ namespace Spore_ModAPI_Easy_Installer
                 else if (node.Name.ToLower() == "compatfile")
                 {
                     Debug.WriteLine("compatFile");
-                    CompatFiles.Add(GetComponentFromXmlNode(node, true));
-                }
-                else if (node.Name.ToLower() == "remove")
-                {
-                    List<string> inner = node.InnerText.Split('?').ToList();
+                    var component = GetComponentFromXmlNode(node, true);
 
-                    List<string> game = new List<string>();
-                    if (node.Attributes["game"] != null)
-                        game = node.Attributes["game"].Value.Split('?').ToList();
-                    else
-                        foreach (string s in inner)
-                            game.Add(string.Empty);
-
-
-
-                    Debug.WriteLine("remove");
-                    Removals.Add(new RemovalInfo()
+                    // we don't support compatFile with removeTargets set
+                    // anymore due to the fact it's dangerous for mods
+                    // to be able to remove files that aren't theirs
+                    if (!component.removeTargets)
                     {
-                        RemovalFileNames = inner,
-                        RemovalGames = game
-                    });
+                        CompatFiles.Add(component);
+                    }
                 }
             }
 

@@ -43,8 +43,6 @@ This page contains documentation regarding creating an XML Mod Identity for your
 				game="GalacticAdventures" defaultChecked="true">ToggleComponent.package</component>
 	<prerequisite game="GalacticAdventures">Component.package</prerequisite>
 	<prerequisite game="GalacticAdventures">PrerequisiteFile.package</prerequisite>
-	<remove game="GalacticAdventures">NothingActuallyStartsWithThis*</remove>
-	<remove game="Spore">*NothingActuallyEndsWithThis.package</remove>
 </mod>
 ```
 
@@ -120,17 +118,6 @@ The prerequisite tag identifies a mandatory part of your mod. Content specifies 
 
 ---
 
-## \<remove\> tag
-
-The remove tag seeks and removes existing files. Content specifies the names of the files which are to be removed if they exist (separated by question marks).
-
-* **game**
-	* Controls where the remove's file(s) are expected to be. Unspecified or invalid values are treated as referring to the ModAPI Launcher Kit folder,
-		e.g. for ModAPI DLLs. Alternative values are "GalacticAdventures" for Spore Galactic Adventures Data folder, 
-		"Spore" for Core Spore Data folder. Value should have the same number of entries as the filenames, again separated by question marks.
-
----
-
 ## \<compatFile\> tag
 
 The compatFile tag adds files only if certain other files are already installed. Content specifies the names of the files in your mod which are to be installed if the target files are found (separated by question marks).
@@ -147,9 +134,6 @@ The compatFile tag adds files only if certain other files are already installed.
 	* Controls where the compatFile's target file(s) are to be installed. Unspecified or invalid values are treated as referring to the ModAPI Launcher Kit folder,
 		e.g. for ModAPI DLLs. Alternative values are "GalacticAdventures" for Spore Galactic Adventures Data folder, 
 		"Spore" for Core Spore Data folder. Value should have the same number of entries as the filenames, again separated by question marks.
-
-* **removeTargets**
-	* Boolean value, controls whether or not the compatFile's source file(s) are removed if the target file is installed. Unspecified or invalid values are treated as false.
 
 ---
 
