@@ -44,7 +44,6 @@ namespace Spore_ModAPI_Easy_Installer
         List<ComponentInfo> Prerequisites = new List<ComponentInfo>();
         List<ComponentInfo> CompatFiles = new List<ComponentInfo>();
         List<ComponentInfo> InstalledCompatFiles = new List<ComponentInfo>();
-        List<RemovalInfo> Removals = new List<RemovalInfo>();
         string ModDisplayName = string.Empty;
         string ModName = string.Empty;
         string ModDescription = string.Empty;
@@ -773,13 +772,6 @@ namespace Spore_ModAPI_Easy_Installer
                 List<string> enabledComponents = new List<string>();
                 InstallProgressBar.Maximum = GetComponentCount(); //enabledComponents.Count + Prerequisites.Count;
 
-                // only respect <remove> during installation
-                if (!_isConfigurator)
-                {
-                    foreach (RemovalInfo p in Removals)
-                        p.Remove();
-                }
-
                 foreach (ComponentInfo p in Prerequisites)
                 {
                     await Task.Run(() => HandleModComponent(p));
@@ -1104,9 +1096,6 @@ namespace Spore_ModAPI_Easy_Installer
         {
             int count = Prerequisites.Count + CompatFiles.Count;
 
-            if (_isConfigurator)
-                count += Removals.Count;
-
             foreach (Control c in ComponentListStackPanel.Children)
             {
                 if (c is CheckBox)
@@ -1130,6 +1119,13 @@ namespace Spore_ModAPI_Easy_Installer
         {
             List<string> targets = new List<string>();
             bool allComponentsExist = true;
+
+            // removeTargets is unsupported
+            if (p.removeTargets)
+            {
+                return;
+            }
+
             for (int i = 0; i < p.ComponentCompatTargetFileNames.Count; i++)
             {
                 string[] targetPaths = new string[]
@@ -1165,12 +1161,6 @@ namespace Spore_ModAPI_Easy_Installer
 
             if (allComponentsExist)
             {
-                if (p.removeTargets)
-                {
-                    foreach (string s in targets)
-                        File.Delete(s);
-                }
-
                 HandleModComponent(p);
                 InstalledCompatFiles.Add(p);
             }
